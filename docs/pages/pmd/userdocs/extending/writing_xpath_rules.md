@@ -16,7 +16,7 @@ Writing PMD rules with XPath can be a bit easier than writing rules with Java co
 
 ## Introduction
 
-PMD provides a very handy method for writing rules by writing an XPath query. When the XPath query finds a match, a violation is added to the report. This document focuses on XPath rules. You can go [here](howtowritearule.html) for more information about writing a rule.
+PMD provides a very handy method for writing rules by writing an XPath query. When the XPath query finds a match, a violation is added to the report. This document focuses on XPath rules. You can go [here](pmd_userdocs_extending_writing_pmd_rules.html) for more information about writing a rule.
 
 ## What is the Abstract Syntax Tree (AST)?
 
@@ -36,6 +36,8 @@ The basic steps involved in writing XPath rules are these:
 2.  See the AST for the class you wrote
 3.  Write an XPath expression that matches the violation you are searching
 4.  Modify the Java class and go back to previous step to refine the XPath expression
+
+See [Designer Reference](pmd_userdocs_extending_designer_reference.html) for a more detailed explanation on how to use the designer.
 
 ## Simple XPath expressions
 
@@ -162,7 +164,7 @@ the example code and give your rule a useful name and message.
 <ruleset name="Custom Rules"
     xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>
 Custom rules
     </description>

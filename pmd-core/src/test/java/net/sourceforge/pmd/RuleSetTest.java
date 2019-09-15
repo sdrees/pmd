@@ -432,11 +432,9 @@ public class RuleSetTest {
         ruleSets.addRuleSet(ruleSet2);
 
         // Two violations
-        PMD p = new PMD();
         RuleContext ctx = new RuleContext();
         Report r = new Report();
         ctx.setReport(r);
-        ctx.setSourceCodeFilename(file.getName());
         ctx.setSourceCodeFile(file);
         ctx.setLanguageVersion(LanguageRegistry.getLanguage(DummyLanguageModule.NAME).getDefaultVersion());
         ruleSets.apply(makeCompilationUnits(), ctx, LanguageRegistry.getLanguage(DummyLanguageModule.NAME));
@@ -523,14 +521,14 @@ public class RuleSetTest {
         RuleContext context = new RuleContext();
         context.setReport(new Report());
         context.setLanguageVersion(LanguageRegistry.getLanguage(DummyLanguageModule.NAME).getDefaultVersion());
-        context.setSourceCodeFilename(RuleSetTest.class.getName() + ".ruleExceptionShouldBeReported");
+        context.setSourceCodeFile(new File(RuleSetTest.class.getName() + ".ruleExceptionShouldBeReported"));
         context.setIgnoreExceptions(true); // the default
         ruleset.apply(makeCompilationUnits(), context);
 
         assertTrue("Report should have processing errors", context.getReport().hasErrors());
         List<ProcessingError> errors = CollectionUtil.toList(context.getReport().errors());
         assertEquals("Errors expected", 1, errors.size());
-        assertEquals("Wrong error message", "Test exception while applying rule", errors.get(0).getMsg());
+        assertEquals("Wrong error message", "RuntimeException: Test exception while applying rule", errors.get(0).getMsg());
         assertTrue("Should be a RuntimeException", errors.get(0).getError() instanceof RuntimeException);
     }
 
@@ -547,7 +545,7 @@ public class RuleSetTest {
         RuleContext context = new RuleContext();
         context.setReport(new Report());
         context.setLanguageVersion(LanguageRegistry.getLanguage(DummyLanguageModule.NAME).getDefaultVersion());
-        context.setSourceCodeFilename(RuleSetTest.class.getName() + ".ruleExceptionShouldBeThrownIfNotIgnored");
+        context.setSourceCodeFile(new File(RuleSetTest.class.getName() + ".ruleExceptionShouldBeThrownIfNotIgnored"));
         context.setIgnoreExceptions(false);
         ruleset.apply(makeCompilationUnits(), context);
     }
@@ -570,14 +568,14 @@ public class RuleSetTest {
         RuleContext context = new RuleContext();
         context.setReport(new Report());
         context.setLanguageVersion(LanguageRegistry.getLanguage(DummyLanguageModule.NAME).getDefaultVersion());
-        context.setSourceCodeFilename(RuleSetTest.class.getName() + ".ruleExceptionShouldBeReported");
+        context.setSourceCodeFile(new File(RuleSetTest.class.getName() + ".ruleExceptionShouldBeReported"));
         context.setIgnoreExceptions(true); // the default
         ruleset.apply(makeCompilationUnits(), context);
 
         assertTrue("Report should have processing errors", context.getReport().hasErrors());
         List<ProcessingError> errors = CollectionUtil.toList(context.getReport().errors());
         assertEquals("Errors expected", 1, errors.size());
-        assertEquals("Wrong error message", "Test exception while applying rule", errors.get(0).getMsg());
+        assertEquals("Wrong error message", "RuntimeException: Test exception while applying rule", errors.get(0).getMsg());
         assertTrue("Should be a RuntimeException", errors.get(0).getError() instanceof RuntimeException);
 
         assertEquals("There should be a violation", 1, context.getReport().size());
@@ -609,7 +607,7 @@ public class RuleSetTest {
         RuleContext context = new RuleContext();
         context.setReport(new Report());
         context.setLanguageVersion(LanguageRegistry.getLanguage(DummyLanguageModule.NAME).getDefaultVersion());
-        context.setSourceCodeFilename(RuleSetTest.class.getName() + ".ruleExceptionShouldBeReported");
+        context.setSourceCodeFile(new File(RuleSetTest.class.getName() + ".ruleExceptionShouldBeReported"));
         context.setIgnoreExceptions(true); // the default
         RuleSets rulesets = new RuleSets(ruleset);
         rulesets.apply(makeCompilationUnits(), context, LanguageRegistry.getLanguage(DummyLanguageModule.NAME));
@@ -617,7 +615,7 @@ public class RuleSetTest {
         assertTrue("Report should have processing errors", context.getReport().hasErrors());
         List<ProcessingError> errors = CollectionUtil.toList(context.getReport().errors());
         assertEquals("Errors expected", 1, errors.size());
-        assertEquals("Wrong error message", "Test exception while applying rule", errors.get(0).getMsg());
+        assertEquals("Wrong error message", "RuntimeException: Test exception while applying rule", errors.get(0).getMsg());
         assertTrue("Should be a RuntimeException", errors.get(0).getError() instanceof RuntimeException);
 
         assertEquals("There should be a violation", 1, context.getReport().size());

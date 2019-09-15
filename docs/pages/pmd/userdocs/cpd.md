@@ -9,28 +9,47 @@ author: Tom Copeland <tom@infoether.com>
 ## Overview
 
 Duplicate code can be hard to find, especially in a large project.
-But PMD's Copy/Paste Detector (CPD) can find it for you!
-CPD has been through three major incarnations:
+But PMD's **Copy/Paste Detector (CPD)** can find it for you!
 
-*   First we wrote it using a variant of Michael Wise's Greedy String Tiling algorithm (our variant is described
-    [here](http://www.onjava.com/pub/a/onjava/2003/03/12/pmd_cpd.html)).
+CPD works with Java, JSP, C/C++, C#, Go, Kotlin, Ruby, Swift and [many more languages](#supported-languages).
+It can be used via [command-line](#cli-usage), or via an [Ant task](#ant-task).
+It can also be run with Maven by using the `cpd-check` goal on the [Maven PMD Plugin](pmd_userdocs_tools_maven.html).
 
-*   Then it was completely rewritten by Brian Ewins using the
-    [Burrows-Wheeler transform](http://dogma.net/markn/articles/bwt/bwt.htm).
 
-*   Finally, it was rewritten by Steve Hawkins to use the
-    [Karp-Rabin](http://www.nist.gov/dads/HTML/karpRabin.html) string matching algorithm.
+Your own language is missing?
+See how to add it [here](pmd_devdocs_major_adding_new_cpd_language.html).
 
-Each rewrite made it much faster, and now it can process the JDK 1.4 java.* packages in about 4 seconds
-(on my workstation, at least).
 
-Note that CPD works with Java, JSP, C, C++, C#, Fortran and PHP code and some more languages. For the
-full list, see below [Supported Languages](#supported-languages). Your own language is missing?
-See how to add it [here](/pmd_devdocs_adding_new_cpd_language.html).
+### Why should you care about duplicates?
 
-CPD is included with PMD, which you can download [here](http://sourceforge.net/projects/pmd/files/pmd/).
+It's certainly important to know where to get CPD, and how to call it, but it's worth stepping back for a moment and asking yourself why you should care about this, being the occurrence of duplicate code blocks.
 
-### CLI options
+Assuming duplicated blocks of code are supposed to do the same thing, any refactoring, even simple, must be duplicated too -- which is unrewarding grunt work, and puts pressure on the developer to find every place in which to perform the refactoring. Automated tools like CPD can help with that to some extent.
+
+However, failure to keep the code in sync may mean automated tools will no longer recognise these blocks as duplicates. This means the task of finding duplicates to keep them in sync when doing subsequent refactorings can no longer be entrusted to an automated tool -- adding more burden on the maintainer. Segments of code initially supposed to do the same thing may grow apart undetected upon further refactoring.
+
+Now, if the code may never change in the future, then this is not a problem.
+
+Otherwise, the most viable solution is to not duplicate. If the duplicates are already there, then they should be refactored out. We thus advise developers to use CPD to **help remove duplicates**, not to help keep duplicates in sync.
+
+### Refactoring duplicates
+
+Once you have located some duplicates, several refactoring strategies may apply depending of the scope and extent of the duplication. Here's a quick summary:
+
+* If the duplication is local to a method or single class:
+    * Extract a local variable if the duplicated logic is not prohibitively long
+    * Extract the duplicated logic into a private method
+* If the duplication occurs in siblings within a class hierarchy:
+    * Extract a method and pull it up in the class hierarchy, along with common fields
+    * Use the [Template Method](https://sourcemaking.com/design_patterns/template_method) design pattern
+* If the duplication occurs consistently in unrelated hierarchies:
+    * Introduce a common ancestor to those class hierarchies
+
+Novice as much as advanced readers may want to [read on on Refactoring Guru](https://refactoring.guru/smells/duplicate-code) for more in-depth strategies, use cases and explanations.
+
+## CLI Usage
+
+### CLI options reference
 
 <table>
     <tr>
@@ -159,11 +178,15 @@ The default format is a text report, and there's also a `csv` report.
 
 Note that CPD is pretty memory-hungry; you may need to give Java more memory to run it, like this:
 
-    $ export HEAPSIZE=512m
+    $ export PMD_JAVA_OPTS=-Xmx512m
     $ ./run.sh cpd --minimum-tokens 100 --files /usr/local/java/src/java
 
-In order to change the heap size under Windows, you'll need to edit the batch file `cpd.bat` set the "OPTS"
-variable to `-Xmx512m`.
+In order to change the heap size under Windows, you'll need to edit the batch file `cpd.bat` or
+set the environment variable `PMD_JAVA_OPTS` prior to starting CPD:
+
+    C:\ > cd C:\pmd-bin-{{site.pmd.version}}\bin
+    C:\...\bin > set PMD_JAVA_OPTS=-Xmx512m
+    C:\...\bin > .\cpd.bat --minimum-tokens 100 --files c:\temp\src
 
 
 If you specify a source directory but don't want to scan the sub-directories, you can use the non-recursive option:
@@ -176,23 +199,26 @@ Please note that if CPD detects duplicated source code, it will exit with status
 This behavior has been introduced to ease CPD integration into scripts or hooks, such as SVN hooks.
 
 <table>
-<tr><td>0</td><td>Everything is fine, now code duplications found</td></tr>
+<tr><td>0</td><td>Everything is fine, no code duplications found</td></tr>
 <tr><td>1</td><td>Couldn't understand command line parameters or CPD exited with an exception</td></tr>
 <tr><td>4</td><td>At least one code duplication has been detected unless '--failOnViolation false' is used.</td></tr>
 </table>
 
 
-### Supported Languages
+## Supported Languages
 
 * Apex
 * C#
 * C/C++
+* Dart
 * EcmaScript (JavaScript)
 * Fortran
 * Go
 * Groovy
 * Java
 * Jsp
+* Kotlin
+* Lua
 * Matlab
 * Objective-C
 * Perl
@@ -205,7 +231,7 @@ This behavior has been introduced to ease CPD integration into scripts or hooks,
 * Visualforce
 
 
-### Available report formats
+## Available report formats
 
 * text : Default format
 * xml
@@ -340,8 +366,8 @@ Here's a screenshot of CPD after running on the JDK 8 java.lang package:
 
 ## Suppression
 
-Arbitrary blocks of code can be ignored through comments on **Java**, **C/C++**, **Javascript**, **Matlab**,
-**Objective-C**, **PL/SQL** and **Python** by including the keywords `CPD-OFF` and `CPD-ON`.
+Arbitrary blocks of code can be ignored through comments on **Java**, **C/C++**, **Dart**, **Go**, **Javascript**,
+**Kotlin**, **Lua**, **Matlab**, **Objective-C**, **PL/SQL**, **Python** and **Swift** by including the keywords `CPD-OFF` and `CPD-ON`.
 
 ```java
     public Object someParameterizedFactoryMethod(int x) throws Exception {
@@ -368,7 +394,7 @@ Additionally, **Java** allows to toggle suppression by adding the annotations
 all code within will be ignored by CPD.
 
 This approach however, is limited to the locations were `@SuppressWarnings` is accepted.
-It's legacy and the new comment's based approch should be favored.
+It's legacy and the new comment's based approach should be favored.
 
 ```java
     //enable suppression
@@ -384,3 +410,15 @@ It's legacy and the new comment's based approch should be favored.
 
 Other languages currently have no support to suppress CPD reports. In the future,
 the comment based approach will be extended to those of them that can support it.
+
+## Credits
+CPD has been through three major incarnations:
+
+*   First we wrote it using a variant of Michael Wise's Greedy String Tiling algorithm (our variant is described
+    [here](http://www.onjava.com/pub/a/onjava/2003/03/12/pmd_cpd.html)).
+
+*   Then it was completely rewritten by Brian Ewins using the
+    [Burrows-Wheeler transform](http://dogma.net/markn/articles/bwt/bwt.htm).
+
+*   Finally, it was rewritten by Steve Hawkins to use the
+    [Karp-Rabin](http://www.nist.gov/dads/HTML/karpRabin.html) string matching algorithm.

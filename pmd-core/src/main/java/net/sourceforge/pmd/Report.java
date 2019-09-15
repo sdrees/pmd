@@ -20,6 +20,7 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 import net.sourceforge.pmd.lang.dfa.report.ReportTree;
+import net.sourceforge.pmd.lang.rule.stat.StatisticalRule;
 import net.sourceforge.pmd.renderers.AbstractAccumulatingRenderer;
 import net.sourceforge.pmd.stat.Metric;
 import net.sourceforge.pmd.util.DateTimeUtil;
@@ -68,7 +69,6 @@ public class Report implements Iterable<RuleViolation> {
         report.addListeners(ctx.getReport().getListeners());
 
         ctx.setReport(report);
-        ctx.setSourceCodeFilename(fileName);
         ctx.setSourceCodeFile(new File(fileName));
         return report;
     }
@@ -160,7 +160,7 @@ public class Report implements Iterable<RuleViolation> {
         }
 
         public String getMsg() {
-            return error.getMessage();
+            return error.getClass().getSimpleName() + ": " + error.getMessage();
         }
         
         public String getDetail() {
@@ -340,7 +340,10 @@ public class Report implements Iterable<RuleViolation> {
      *
      * @param metric
      *            the metric to add
+     *
+     * @deprecated see {@link StatisticalRule}
      */
+    @Deprecated
     public void addMetric(Metric metric) {
         metrics.add(metric);
         for (ThreadSafeReportListener listener : listeners) {
@@ -414,7 +417,10 @@ public class Report implements Iterable<RuleViolation> {
      *
      * @return <code>true</code> if there are metrics, <code>false</code>
      *         otherwise
+     *
+     * @deprecated see {@link StatisticalRule}
      */
+    @Deprecated
     public boolean hasMetrics() {
         return !metrics.isEmpty();
     }
@@ -423,7 +429,10 @@ public class Report implements Iterable<RuleViolation> {
      * Iterate over the metrics.
      *
      * @return an iterator over the metrics
+     *
+     * @deprecated see {@link StatisticalRule}
      */
+    @Deprecated
     public Iterator<Metric> metrics() {
         return metrics.iterator();
     }

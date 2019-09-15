@@ -7,6 +7,7 @@ package net.sourceforge.pmd.testframework;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -25,7 +26,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -276,7 +276,7 @@ public abstract class RuleTst {
             }
             RuleContext ctx = new RuleContext();
             ctx.setReport(report);
-            ctx.setSourceCodeFilename("n/a");
+            ctx.setSourceCodeFile(new File("n/a"));
             ctx.setLanguageVersion(languageVersion);
             ctx.setIgnoreExceptions(false);
             RuleSet rules = new RuleSetFactory().createSingleRuleRuleSet(rule);
@@ -328,22 +328,15 @@ public abstract class RuleTst {
      */
     public TestDescriptor[] extractTestsFromXml(Rule rule, String testsFileName, String baseDirectory) {
         String testXmlFileName = baseDirectory + testsFileName + ".xml";
-        InputStream inputStream = getClass().getResourceAsStream(testXmlFileName);
-        if (inputStream == null) {
-            throw new RuntimeException("Couldn't find " + testXmlFileName);
-        }
 
         Document doc;
-        try {
+        try (InputStream inputStream = getClass().getResourceAsStream(testXmlFileName)) {
+            if (inputStream == null) {
+                throw new RuntimeException("Couldn't find " + testXmlFileName);
+            }
             doc = documentBuilder.parse(inputStream);
-        } catch (FactoryConfigurationError fce) {
-            throw new RuntimeException("Couldn't parse " + testXmlFileName + ", due to: " + fce, fce);
-        } catch (IOException ioe) {
-            throw new RuntimeException("Couldn't parse " + testXmlFileName + ", due to: " + ioe, ioe);
-        } catch (SAXException se) {
-            throw new RuntimeException("Couldn't parse " + testXmlFileName + ", due to: " + se, se);
-        } finally {
-            IOUtils.closeQuietly(inputStream);
+        } catch (FactoryConfigurationError | IOException | SAXException e) {
+            throw new RuntimeException("Couldn't parse " + testXmlFileName + ", due to: " + e, e);
         }
 
         return parseTests(rule, doc);

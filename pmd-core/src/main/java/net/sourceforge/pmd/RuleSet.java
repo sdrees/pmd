@@ -499,11 +499,11 @@ public class RuleSet implements ChecksumAware {
                         rule.apply(acuList, ctx);
                     } catch (RuntimeException e) {
                         if (ctx.isIgnoreExceptions()) {
-                            ctx.getReport().addError(new Report.ProcessingError(e, ctx.getSourceCodeFilename()));
+                            ctx.getReport().addError(new Report.ProcessingError(e, String.valueOf(ctx.getSourceCodeFile())));
 
                             if (LOG.isLoggable(Level.WARNING)) {
                                 LOG.log(Level.WARNING, "Exception applying rule " + rule.getName() + " on file "
-                                        + ctx.getSourceCodeFilename() + ", continuing with next rule", e);
+                                        + ctx.getSourceCodeFile() + ", continuing with next rule", e);
                             }
                         } else {
                             throw e;
@@ -603,7 +603,9 @@ public class RuleSet implements ChecksumAware {
      *            The Language.
      * @return <code>true</code> if a Rule for the Language uses the DFA layer,
      *         <code>false</code> otherwise.
+     * @deprecated See {@link Rule#isDfa()}
      */
+    @Deprecated
     public boolean usesDFA(Language language) {
         for (Rule r : rules) {
             if (r.getLanguage().equals(language) && r.isDfa()) {
@@ -620,7 +622,9 @@ public class RuleSet implements ChecksumAware {
      *            The Language.
      * @return <code>true</code> if a Rule for the Language uses Type
      *         Resolution, <code>false</code> otherwise.
+     * @deprecated See {@link Rule#isTypeResolution()}
      */
+    @Deprecated
     public boolean usesTypeResolution(Language language) {
         for (Rule r : rules) {
             if (r.getLanguage().equals(language) && r.isTypeResolution()) {
@@ -639,7 +643,9 @@ public class RuleSet implements ChecksumAware {
      *
      * @return {@code true} if a Rule for the Language uses multi file analysis,
      *         {@code false} otherwise.
+     * @deprecated See {@link Rule#isMultifile()}
      */
+    @Deprecated
     public boolean usesMultifile(Language language) {
         for (Rule r : rules) {
             if (r.getLanguage().equals(language) && r.isMultifile()) {

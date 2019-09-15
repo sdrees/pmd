@@ -16,6 +16,9 @@ import net.sourceforge.pmd.lang.java.ast.ASTCompilationUnit;
 import net.sourceforge.pmd.lang.java.ast.ASTImportDeclaration;
 import net.sourceforge.pmd.lang.java.ast.ASTName;
 import net.sourceforge.pmd.lang.java.ast.ASTPackageDeclaration;
+import net.sourceforge.pmd.lang.java.ast.ASTPrimaryExpression;
+import net.sourceforge.pmd.lang.java.ast.ASTPrimaryPrefix;
+import net.sourceforge.pmd.lang.java.ast.ASTPrimarySuffix;
 import net.sourceforge.pmd.lang.java.ast.Comment;
 import net.sourceforge.pmd.lang.java.ast.DummyJavaNode;
 import net.sourceforge.pmd.lang.java.ast.FormalComment;
@@ -38,10 +41,10 @@ public class UnusedImportsRule extends AbstractJavaRule {
      * @throws package.class label
      */
     private static final Pattern SEE_PATTERN = Pattern
-            .compile("@see\\s+(\\p{Alpha}\\w*)(?:#\\w*(?:\\(([\\w\\s,]*)\\))?)?");
+            .compile("@see\\s+(\\p{Alpha}?+\\w*)(?:#\\w*(?:\\(([\\w\\s,\\[\\]]*)\\))?)?");
 
     private static final Pattern LINK_PATTERNS = Pattern
-            .compile("\\{@link(?:plain)?\\s+(\\p{Alpha}\\w*)(?:#\\w*(?:\\(([.\\w\\s,]*)\\))?)?[\\s\\}]");
+            .compile("\\{@link(?:plain)?\\s+(\\p{Alpha}\\w*)(?:#\\w*(?:\\(([.\\w\\s,\\[\\]]*)\\))?)?[\\s\\}]");
 
     private static final Pattern VALUE_PATTERN = Pattern.compile("\\{@value\\s+(\\p{Alpha}\\w*)[\\s#\\}]");
 
@@ -166,12 +169,45 @@ public class UnusedImportsRule extends AbstractJavaRule {
     }
 
     protected ImportWrapper getImportWrapper(Node node) {
+        String fullName = node.getImage();
+
         String name;
         if (!isQualifiedName(node)) {
             name = node.getImage();
         } else {
+            // ASTName could be: MyClass.MyConstant
+            // name -> MyClass
+            // fullName -> MyClass.MyConstant
             name = node.getImage().substring(0, node.getImage().indexOf('.'));
+            if (isMethodCall(node)) {
+                // ASTName could be: MyClass.MyConstant.method(a, b)
+                // name -> MyClass
+                // fullName -> MyClass.MyConstant
+                fullName = node.getImage().substring(0, node.getImage().lastIndexOf('.'));
+            }
         }
-        return new ImportWrapper(node.getImage(), name);
+
+        return new ImportWrapper(fullName, name);
+    }
+
+    private boolean isMethodCall(Node node) {
+        // PrimaryExpression
+        //     PrimaryPrefix
+        //         Name
+        //     PrimarySuffix
+
+        if (node.jjtGetParent() instanceof ASTPrimaryPrefix && node.getNthParent(2) instanceof ASTPrimaryExpression) {
+            Node primaryPrefix = node.jjtGetParent();
+            Node expression = primaryPrefix.jjtGetParent();
+
+            boolean hasNextSibling = expression.jjtGetNumChildren() > primaryPrefix.jjtGetChildIndex() + 1;
+            if (hasNextSibling) {
+                Node nextSibling = expression.jjtGetChild(primaryPrefix.jjtGetChildIndex() + 1);
+                if (nextSibling instanceof ASTPrimarySuffix) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

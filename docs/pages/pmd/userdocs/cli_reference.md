@@ -50,8 +50,11 @@ The tool comes with a rather extensive help text, simply running with `-help`!
                default="false"
     %}
     {% include custom/cli_option_row.html options="-cache"
-               option_arg="path"
-               description="Specifies a location for the analysis cache file to use.
+               option_arg="filepath"
+               description="Specify the location of the cache file for incremental analysis.
+                            This should be the full path to the file, including the desired file name (not just the parent directory).
+                            If the file doesn't exist, it will be created on the first run. The file will be overwritten on each run
+                            with the most up-to-date rule violations.
                             This can greatly improve analysis performance and is **highly recommended**."
     %}
     {% include custom/cli_option_row.html options="-debug,-verbose,-D,-V"
@@ -72,9 +75,15 @@ The tool comes with a rather extensive help text, simply running with `-help`!
                default="true"
     %}
     {% include custom/cli_option_row.html options="-filelist"
-               option_arg="files"
+               option_arg="filepath"
                description="Path to file containing a comma delimited list of files to analyze.
                             If this is given, then you don't need to provide `-dir`."
+    %}
+    {% include custom/cli_option_row.html options="-ignorelist"
+               option_arg="filepath"
+               description="Path to file containing a comma delimited list of files to ignore.
+                            This option can be combined with `-dir` and `-filelist`.
+                            This ignore list takes precedence over any files in the filelist."
     %}
     {% include custom/cli_option_row.html options="-help,-h,-H"
                description="Display help on usage."
@@ -141,6 +150,16 @@ The tool comes with a rather extensive help text, simply running with `-help`!
     %}
 </table>
 
+## Additional Java Runtime Options
+
+PMD is executed via a Java runtime. In some cases, you might need to set additional runtime options, e.g.
+if you want to analyze a project, that uses one of OpenJDK's [Preview Language Features](http://openjdk.java.net/jeps/12).
+
+Just set the environment variable `PMD_JAVA_OPTS` before executing PMD, e.g.
+
+    export PMD_JAVA_OPTS="--enable-preview"
+    ./run.sh pmd -d ../../../src/main/java/ -f text -R rulesets/java/quickstart.xml
+
 ## Exit Status
 
 Please note that if PMD detects any violations, it will exit with status 4 (since 5.3).
@@ -157,12 +176,13 @@ This behavior has been introduced to ease PMD integration into scripts or hooks,
 
 *   [apex](pmd_rules_apex.html) (Salesforce Apex)
 *   [java](pmd_rules_java.html)
-*   [ecmascript](pmd_rules_javascript.html) (JavaScript)
+*   [ecmascript](pmd_rules_ecmascript.html) (JavaScript)
 *   [jsp](pmd_rules_jsp.html)
 *   [plsql](pmd_rules_plsql.html)
+*   [scala](pmd_rules_scala.html)
 *   [vf](pmd_rules_vf.html) (Salesforce VisualForce)
 *   [vm](pmd_rules_vm.html) (Apache Velocity)
-*   [xml and xsl](/pmd_rules_xml.html)
+*   [xml and xsl](pmd_rules_xml.html)
 
 
 ## Available Report Formats

@@ -19,6 +19,10 @@ import org.objectweb.asm.Type;
 import org.objectweb.asm.signature.SignatureReader;
 import org.objectweb.asm.signature.SignatureVisitor;
 
+import net.sourceforge.pmd.annotation.InternalApi;
+
+@Deprecated
+@InternalApi
 public class PMDASMVisitor extends ClassVisitor {
 
     private String outerName;
@@ -36,7 +40,7 @@ public class PMDASMVisitor extends ClassVisitor {
     public List<String> innerClasses;
 
     public PMDASMVisitor(String outerName) {
-        super(Opcodes.ASM7_EXPERIMENTAL);
+        super(Opcodes.ASM7);
         this.outerName = outerName;
     }
 

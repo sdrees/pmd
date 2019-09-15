@@ -28,6 +28,7 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
 
     public static final String NAME = "html";
 
+    // TODO 7.0.0 use PropertyDescriptor<String>
     public static final StringProperty LINE_PREFIX = new StringProperty("linePrefix",
             "Prefix for line number anchor in the source file.", null, 1);
     public static final StringProperty LINK_PREFIX = new StringProperty("linkPrefix", "Path to HTML source.", null, 0);
@@ -118,7 +119,7 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
             buf.append("> " + PMD.EOL);
             buf.append("<td align=\"center\">" + violationCount + "</td>" + PMD.EOL);
             buf.append("<td width=\"*%\">"
-                    + maybeWrap(StringEscapeUtils.escapeHtml4(rv.getFilename()),
+                    + maybeWrap(StringEscapeUtils.escapeHtml4(determineFileName(rv.getFilename())),
                             linePrefix == null ? "" : linePrefix + Integer.toString(rv.getBeginLine()))
                     + "</td>" + PMD.EOL);
             buf.append("<td align=\"center\" width=\"5%\">" + Integer.toString(rv.getBeginLine()) + "</td>" + PMD.EOL);
@@ -157,7 +158,7 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
             }
             colorize = !colorize;
             buf.append("> " + PMD.EOL);
-            buf.append("<td>" + pe.getFile() + "</td>" + PMD.EOL);
+            buf.append("<td>" + determineFileName(pe.getFile()) + "</td>" + PMD.EOL);
             buf.append("<td><pre>" + pe.getDetail() + "</pre></td>" + PMD.EOL);
             buf.append("</tr>" + PMD.EOL);
             writer.write(buf.toString());
@@ -185,7 +186,7 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
             }
             colorize = !colorize;
             buf.append("> " + PMD.EOL);
-            buf.append("<td align=\"left\">" + sv.getRuleViolation().getFilename() + "</td>" + PMD.EOL);
+            buf.append("<td align=\"left\">" + determineFileName(sv.getRuleViolation().getFilename()) + "</td>" + PMD.EOL);
             buf.append("<td align=\"center\">" + sv.getRuleViolation().getBeginLine() + "</td>" + PMD.EOL);
             buf.append("<td align=\"center\">" + sv.getRuleViolation().getRule().getName() + "</td>" + PMD.EOL);
             buf.append("<td align=\"center\">" + (sv.suppressedByNOPMD() ? "NOPMD" : "Annotation") + "</td>" + PMD.EOL);

@@ -280,7 +280,6 @@ public class PMD {
 
         RuleContext context = new RuleContext();
         context.setSourceCodeFile(sourceCodeFile);
-        context.setSourceCodeFilename(sourceCodeFilename);
         context.setReport(new Report());
         return context;
     }
@@ -316,7 +315,7 @@ public class PMD {
         // Make sure the cache is listening for analysis results
         ctx.getReport().addListener(configuration.getAnalysisCache());
 
-        final RuleSetFactory silentFactoy = new RuleSetFactory(ruleSetFactory, false);
+        final RuleSetFactory silentFactory = new RuleSetFactory(ruleSetFactory, false);
 
         /*
          * Check if multithreaded support is available. ExecutorService can also
@@ -324,9 +323,9 @@ public class PMD {
          * "-threads 0" command line option.
          */
         if (configuration.getThreads() > 0) {
-            new MultiThreadProcessor(configuration).processFiles(silentFactoy, files, ctx, renderers);
+            new MultiThreadProcessor(configuration).processFiles(silentFactory, files, ctx, renderers);
         } else {
-            new MonoThreadProcessor(configuration).processFiles(silentFactoy, files, ctx, renderers);
+            new MonoThreadProcessor(configuration).processFiles(silentFactory, files, ctx, renderers);
         }
 
         // Persist the analysis cache
@@ -404,6 +403,23 @@ public class PMD {
                 throw new RuntimeException("Problem with Input File Path: " + inputFilePath, ex);
             }
 
+        }
+
+        if (null != configuration.getIgnoreFilePath()) {
+            String ignoreFilePath = configuration.getIgnoreFilePath();
+            File file = new File(ignoreFilePath);
+            try {
+                if (!file.exists()) {
+                    LOG.log(Level.SEVERE, "Problem with Ignore File Path", ignoreFilePath);
+                    throw new RuntimeException("Problem with Ignore File Path: " + ignoreFilePath);
+                } else {
+                    String filePaths = FileUtil.readFilelist(new File(ignoreFilePath));
+                    files.removeAll(FileUtil.collectFiles(filePaths, fileSelector));
+                }
+            } catch (IOException ex) {
+                LOG.log(Level.SEVERE, "Problem with Ignore File", ex);
+                throw new RuntimeException("Problem with Ignore File Path: " + ignoreFilePath, ex);
+            }
         }
         return files;
     }

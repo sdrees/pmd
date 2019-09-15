@@ -4,6 +4,7 @@
 
 package net.sourceforge.pmd.renderers;
 
+import java.io.File;
 import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -56,7 +57,13 @@ public class XMLRendererTest extends AbstractRendererTst {
 
     @Override
     public String getExpectedError(ProcessingError error) {
-        return getHeader() + "<error filename=\"file\" msg=\"Error\">"
+        return getHeader() + "<error filename=\"file\" msg=\"RuntimeException: Error\">"
+                + PMD.EOL + "<![CDATA[" + error.getDetail() + "]]>" + PMD.EOL + "</error>" + PMD.EOL + "</pmd>" + PMD.EOL;
+    }
+
+    @Override
+    public String getExpectedErrorWithoutMessage(ProcessingError error) {
+        return getHeader() + "<error filename=\"file\" msg=\"NullPointerException: null\">"
                 + PMD.EOL + "<![CDATA[" + error.getDetail() + "]]>" + PMD.EOL + "</error>" + PMD.EOL + "</pmd>" + PMD.EOL;
     }
 
@@ -79,7 +86,7 @@ public class XMLRendererTest extends AbstractRendererTst {
         node.testingOnlySetEndLine(1);
         node.testingOnlySetEndColumn(1);
         RuleContext ctx = new RuleContext();
-        ctx.setSourceCodeFilename("n/a");
+        ctx.setSourceCodeFile(new File("n/a"));
         return new ParametricRuleViolation<Node>(new FooRule(), ctx, node, description);
     }
 

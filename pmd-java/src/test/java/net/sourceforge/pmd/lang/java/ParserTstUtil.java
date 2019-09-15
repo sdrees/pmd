@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -204,12 +205,12 @@ public class ParserTstUtil {
     }
 
 
-    public static LanguageVersionHandler getLanguageVersionHandler(String version) {
-        return LanguageRegistry.getLanguage(JavaLanguageModule.NAME).getVersion(version).getLanguageVersionHandler();
+    public static AbstractJavaHandler getLanguageVersionHandler(String version) {
+        return (AbstractJavaHandler) LanguageRegistry.getLanguage(JavaLanguageModule.NAME).getVersion(version).getLanguageVersionHandler();
     }
 
-    public static LanguageVersionHandler getDefaultLanguageVersionHandler() {
-        return LanguageRegistry.getLanguage(JavaLanguageModule.NAME).getDefaultVersion().getLanguageVersionHandler();
+    public static AbstractJavaHandler getDefaultLanguageVersionHandler() {
+        return (AbstractJavaHandler) LanguageRegistry.getLanguage(JavaLanguageModule.NAME).getDefaultVersion().getLanguageVersionHandler();
     }
 
 
@@ -238,7 +239,7 @@ public class ParserTstUtil {
         }
         String source;
         try {
-            source = IOUtils.toString(is);
+            source = IOUtils.toString(is, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

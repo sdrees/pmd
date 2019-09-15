@@ -6,6 +6,8 @@ package net.sourceforge.pmd.renderers;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import net.sourceforge.pmd.FooRule;
@@ -36,6 +38,10 @@ public abstract class AbstractRendererTst {
 
     public String getExpectedError(ProcessingError error) {
         return "";
+    }
+
+    public String getExpectedErrorWithoutMessage(ProcessingError error) {
+        return getExpectedError(error);
     }
 
     public String getExpectedError(ConfigurationError error) {
@@ -71,7 +77,7 @@ public abstract class AbstractRendererTst {
     protected RuleViolation newRuleViolation(int endColumn) {
         DummyNode node = createNode(endColumn);
         RuleContext ctx = new RuleContext();
-        ctx.setSourceCodeFilename(getSourceCodeFilename());
+        ctx.setSourceCodeFile(new File(getSourceCodeFilename()));
         return new ParametricRuleViolation<Node>(new FooRule(), ctx, node, "blah");
     }
 
@@ -88,7 +94,7 @@ public abstract class AbstractRendererTst {
     public void testRuleWithProperties() throws Exception {
         DummyNode node = createNode(1);
         RuleContext ctx = new RuleContext();
-        ctx.setSourceCodeFilename(getSourceCodeFilename());
+        ctx.setSourceCodeFile(new File(getSourceCodeFilename()));
         Report report = new Report();
         RuleWithProperties theRule = new RuleWithProperties();
         theRule.setProperty(RuleWithProperties.STRING_PROPERTY_DESCRIPTOR,
@@ -126,6 +132,15 @@ public abstract class AbstractRendererTst {
         rep.addError(err);
         String actual = ReportTest.render(getRenderer(), rep);
         assertEquals(filter(getExpectedError(err)), filter(actual));
+    }
+
+    @Test
+    public void testErrorWithoutMessage() throws Exception {
+        Report rep = new Report();
+        Report.ProcessingError err = new Report.ProcessingError(new NullPointerException(), "file");
+        rep.addError(err);
+        String actual = ReportTest.render(getRenderer(), rep);
+        assertEquals(filter(getExpectedErrorWithoutMessage(err)), filter(actual));
     }
 
     @Test

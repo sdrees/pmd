@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
@@ -30,6 +32,7 @@ import org.mockito.Mockito;
 
 import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.lang.Language;
 
 public class FileAnalysisCacheTest {
     
@@ -98,6 +101,7 @@ public class FileAnalysisCacheTest {
         final RuleViolation rv = mock(RuleViolation.class);
         when(rv.getFilename()).thenReturn(sourceFile.getPath());
         final net.sourceforge.pmd.Rule rule = mock(net.sourceforge.pmd.Rule.class, Mockito.RETURNS_SMART_NULLS);
+        when(rule.getLanguage()).thenReturn(mock(Language.class));
         when(rv.getRule()).thenReturn(rule);
 
         cache.ruleViolationAdded(rv);
@@ -185,6 +189,7 @@ public class FileAnalysisCacheTest {
         
         final net.sourceforge.pmd.Rule r = mock(net.sourceforge.pmd.Rule.class);
         when(r.isDfa()).thenReturn(true);
+        when(r.getLanguage()).thenReturn(mock(Language.class));
         when(rs.getAllRules()).thenReturn(Collections.singleton(r));
         reloadedCache.checkValidity(rs, cl);
         assertFalse("Cache believes unmodified file is up to date after auxclasspath changed",
@@ -201,6 +206,7 @@ public class FileAnalysisCacheTest {
         
         final net.sourceforge.pmd.Rule r = mock(net.sourceforge.pmd.Rule.class);
         when(r.isDfa()).thenReturn(true);
+        when(r.getLanguage()).thenReturn(mock(Language.class));
         when(rs.getAllRules()).thenReturn(Collections.singleton(r));
         
         setupCacheWithFiles(newCacheFile, rs, cl, sourceFile);
@@ -214,6 +220,22 @@ public class FileAnalysisCacheTest {
                 reloadedCache.isUpToDate(sourceFile));
     }
 
+    @Test
+    public void testClasspathNonExistingEntryIsIgnored() throws MalformedURLException, IOException {
+        final RuleSets rs = mock(RuleSets.class);
+        final ClassLoader cl = mock(ClassLoader.class);
+        
+        System.setProperty("java.class.path", System.getProperty("java.class.path") + File.pathSeparator
+                + tempFolder.getRoot().getAbsolutePath() + File.separator + "non-existing-dir");
+        
+        final FileAnalysisCache reloadedCache = new FileAnalysisCache(newCacheFile);
+        try {
+            reloadedCache.checkValidity(rs, cl);
+        } catch (final Exception e) {
+            fail("Validity check failed when classpath includes non-existing directories");
+        }
+    }
+    
     @Test
     public void testClasspathChangeInvalidatesCache() throws MalformedURLException, IOException {
         final RuleSets rs = mock(RuleSets.class);
@@ -254,7 +276,51 @@ public class FileAnalysisCacheTest {
         assertFalse("Cache believes cache is up to date when a classpath file changed",
                 reloadedCache.isUpToDate(sourceFile));
     }
-    
+
+    @Test
+    public void testWildcardClasspath() throws MalformedURLException, IOException {
+        final RuleSets rs = mock(RuleSets.class);
+        final ClassLoader cl = mock(ClassLoader.class);
+        setupCacheWithFiles(newCacheFile, rs, cl, sourceFile);
+
+        // Prepare two jar files
+        final File classpathJar1 = tempFolder.newFile("mylib1.jar");
+        Files.write(classpathJar1.toPath(), "content of mylib1.jar".getBytes(StandardCharsets.UTF_8));
+        final File classpathJar2 = tempFolder.newFile("mylib2.jar");
+        Files.write(classpathJar2.toPath(), "content of mylib2.jar".getBytes(StandardCharsets.UTF_8));
+
+        System.setProperty("java.class.path", System.getProperty("java.class.path") + File.pathSeparator + tempFolder.getRoot().getAbsolutePath() + "/*");
+
+        final FileAnalysisCache reloadedCache = new FileAnalysisCache(newCacheFile);
+        reloadedCache.checkValidity(rs, cl);
+        assertFalse("Cache believes cache is up to date when the classpath changed",
+                reloadedCache.isUpToDate(sourceFile));
+    }
+
+    @Test
+    public void testWildcardClasspathContentsChangeInvalidatesCache() throws MalformedURLException, IOException {
+        final RuleSets rs = mock(RuleSets.class);
+        final ClassLoader cl = mock(ClassLoader.class);
+
+        // Prepare two jar files
+        final File classpathJar1 = tempFolder.newFile("mylib1.jar");
+        Files.write(classpathJar1.toPath(), "content of mylib1.jar".getBytes(StandardCharsets.UTF_8));
+        final File classpathJar2 = tempFolder.newFile("mylib2.jar");
+        Files.write(classpathJar2.toPath(), "content of mylib2.jar".getBytes(StandardCharsets.UTF_8));
+
+        System.setProperty("java.class.path", System.getProperty("java.class.path") + File.pathSeparator + tempFolder.getRoot().getAbsolutePath() + "/*");
+
+        setupCacheWithFiles(newCacheFile, rs, cl, sourceFile);
+
+        // Change one file's contents
+        Files.write(Paths.get(classpathJar2.getAbsolutePath()), "some other text".getBytes(StandardCharsets.UTF_8));
+
+        final FileAnalysisCache reloadedCache = new FileAnalysisCache(newCacheFile);
+        reloadedCache.checkValidity(rs, cl);
+        assertFalse("Cache believes cache is up to date when the classpath changed",
+                reloadedCache.isUpToDate(sourceFile));
+    }
+
     @Test
     public void testUnknownFileIsNotUpToDate() throws IOException {
         final FileAnalysisCache cache = new FileAnalysisCache(newCacheFile);

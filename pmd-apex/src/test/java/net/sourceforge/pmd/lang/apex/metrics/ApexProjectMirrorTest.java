@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -47,7 +48,8 @@ public class ApexProjectMirrorTest {
     static {
         try {
             acu = parseAndVisitForString(
-                IOUtils.toString(ApexMultifileVisitorTest.class.getResourceAsStream("MetadataDeployController.cls")));
+                IOUtils.toString(ApexMultifileVisitorTest.class.getResourceAsStream("MetadataDeployController.cls"),
+                        StandardCharsets.UTF_8));
         } catch (IOException ioe) {
             // Should definitely not happen
         }
@@ -89,7 +91,7 @@ public class ApexProjectMirrorTest {
             @Override
             public Object visit(ASTMethod node, Object data) {
                 MetricMemoizer<ASTMethod> op = toplevel.getOperationMemoizer(node.getQualifiedName());
-                result.add((int) ApexMetricsComputer.INSTANCE.computeForOperation(opMetricKey, node, force,
+                result.add((int) ApexMetricsComputer.getInstance().computeForOperation(opMetricKey, node, force,
                                                                                   MetricOptions.emptyOptions(), op));
                 return super.visit(node, data);
             }
@@ -98,7 +100,7 @@ public class ApexProjectMirrorTest {
             @Override
             public Object visit(ASTUserClass node, Object data) {
                 MetricMemoizer<ASTUserClassOrInterface<?>> clazz = toplevel.getClassMemoizer(node.getQualifiedName());
-                result.add((int) ApexMetricsComputer.INSTANCE.computeForType(classMetricKey, node, force,
+                result.add((int) ApexMetricsComputer.getInstance().computeForType(classMetricKey, node, force,
                                                                              MetricOptions.emptyOptions(), clazz));
                 return super.visit(node, data);
             }

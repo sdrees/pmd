@@ -1,9 +1,12 @@
 repository: pmd/pmd
 
 pmd:
-    version: 6.9.0
-    date: ??-????-2018
+    version: 6.19.0
+    previous_version: 6.18.0
+    date: ??-October-2019
     release_type: minor
+
+# release types: major, minor, bugfix
 
 output: web
 # this property is useful for conditional filtering of content that is separate from the PDF.

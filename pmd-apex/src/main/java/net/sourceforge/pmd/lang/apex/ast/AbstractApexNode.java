@@ -15,7 +15,7 @@ public abstract class AbstractApexNode<T extends AstNode> extends AbstractApexNo
 
     protected final T node;
 
-    public AbstractApexNode(T node) {
+    protected AbstractApexNode(T node) {
         super(node.getClass());
         this.node = node;
     }
@@ -38,17 +38,14 @@ public abstract class AbstractApexNode<T extends AstNode> extends AbstractApexNo
         return node;
     }
 
-    protected boolean hasRealLoc() {
+    public boolean hasRealLoc() {
         try {
             Location loc = node.getLoc();
             return loc != null && Locations.isReal(loc);
         } catch (UnexpectedCodePathException e) {
             return false;
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
             // bug in apex-jorje? happens on some ReferenceExpression nodes
-            return false;
-        } catch (NullPointerException e) {
-            // bug in apex-jorje?
             return false;
         }
     }

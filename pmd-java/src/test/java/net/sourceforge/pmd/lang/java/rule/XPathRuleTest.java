@@ -6,6 +6,7 @@ package net.sourceforge.pmd.lang.java.rule;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -94,6 +95,24 @@ public class XPathRuleTest extends RuleTst {
         StringProperty varDescriptor = new StringProperty("var", "Test var", null, 1.0f);
         rule.definePropertyDescriptor(varDescriptor);
         rule.setProperty(varDescriptor, "fiddle");
+        Report report = getReportForTestString(rule, TEST2);
+        RuleViolation rv = report.iterator().next();
+        assertEquals(3, rv.getBeginLine());
+    }
+
+    @Test
+    public void testFnPrefixOnSaxon() throws Exception {
+        rule.setXPath("//VariableDeclaratorId[fn:matches(@Image, 'fiddle')]");
+        rule.setVersion(XPathRuleQuery.XPATH_2_0);
+        Report report = getReportForTestString(rule, TEST2);
+        RuleViolation rv = report.iterator().next();
+        assertEquals(3, rv.getBeginLine());
+    }
+
+    @Test
+    public void testNoFnPrefixOnSaxon() throws Exception {
+        rule.setXPath("//VariableDeclaratorId[matches(@Image, 'fiddle')]");
+        rule.setVersion(XPathRuleQuery.XPATH_2_0);
         Report report = getReportForTestString(rule, TEST2);
         RuleViolation rv = report.iterator().next();
         assertEquals(3, rv.getBeginLine());
@@ -191,7 +210,7 @@ public class XPathRuleTest extends RuleTst {
         RuleContext ctx = new RuleContext();
         Report report = new Report();
         ctx.setReport(report);
-        ctx.setSourceCodeFilename("n/a");
+        ctx.setSourceCodeFile(new File("n/a"));
         RuleSet rules = new RuleSetFactory().createSingleRuleRuleSet(r);
         p.getSourceCodeProcessor().processSourceCode(new StringReader(test), new RuleSets(rules), ctx);
         return report;

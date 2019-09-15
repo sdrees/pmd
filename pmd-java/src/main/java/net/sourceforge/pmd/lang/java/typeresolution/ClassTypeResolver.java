@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.sourceforge.pmd.annotation.InternalApi;
 import net.sourceforge.pmd.lang.ast.Node;
 import net.sourceforge.pmd.lang.ast.QualifiableNode;
 import net.sourceforge.pmd.lang.java.ast.ASTAdditiveExpression;
@@ -31,7 +32,10 @@ import net.sourceforge.pmd.lang.java.ast.ASTAnyTypeDeclaration;
 import net.sourceforge.pmd.lang.java.ast.ASTArgumentList;
 import net.sourceforge.pmd.lang.java.ast.ASTArguments;
 import net.sourceforge.pmd.lang.java.ast.ASTArrayDimsAndInits;
+import net.sourceforge.pmd.lang.java.ast.ASTBlock;
+import net.sourceforge.pmd.lang.java.ast.ASTBlockStatement;
 import net.sourceforge.pmd.lang.java.ast.ASTBooleanLiteral;
+import net.sourceforge.pmd.lang.java.ast.ASTBreakStatement;
 import net.sourceforge.pmd.lang.java.ast.ASTCastExpression;
 import net.sourceforge.pmd.lang.java.ast.ASTClassOrInterfaceDeclaration;
 import net.sourceforge.pmd.lang.java.ast.ASTClassOrInterfaceType;
@@ -72,6 +76,8 @@ import net.sourceforge.pmd.lang.java.ast.ASTResource;
 import net.sourceforge.pmd.lang.java.ast.ASTShiftExpression;
 import net.sourceforge.pmd.lang.java.ast.ASTSingleMemberAnnotation;
 import net.sourceforge.pmd.lang.java.ast.ASTStatementExpression;
+import net.sourceforge.pmd.lang.java.ast.ASTSwitchExpression;
+import net.sourceforge.pmd.lang.java.ast.ASTSwitchLabeledRule;
 import net.sourceforge.pmd.lang.java.ast.ASTType;
 import net.sourceforge.pmd.lang.java.ast.ASTTypeArgument;
 import net.sourceforge.pmd.lang.java.ast.ASTTypeArguments;
@@ -85,6 +91,7 @@ import net.sourceforge.pmd.lang.java.ast.ASTVariableDeclarator;
 import net.sourceforge.pmd.lang.java.ast.ASTVariableDeclaratorId;
 import net.sourceforge.pmd.lang.java.ast.ASTVariableInitializer;
 import net.sourceforge.pmd.lang.java.ast.ASTWildcardBounds;
+import net.sourceforge.pmd.lang.java.ast.ASTYieldStatement;
 import net.sourceforge.pmd.lang.java.ast.AbstractJavaTypeNode;
 import net.sourceforge.pmd.lang.java.ast.JavaNode;
 import net.sourceforge.pmd.lang.java.ast.JavaParserVisitorAdapter;
@@ -102,6 +109,8 @@ import net.sourceforge.pmd.lang.symboltable.Scope;
 // http://java.sun.com/docs/books/jls/second_edition/html/conversions.doc.html
 //
 
+@Deprecated
+@InternalApi
 public class ClassTypeResolver extends JavaParserVisitorAdapter {
 
     private static final Logger LOG = Logger.getLogger(ClassTypeResolver.class.getName());
@@ -499,7 +508,9 @@ public class ClassTypeResolver extends JavaParserVisitorAdapter {
                 // swallow
             } catch (final LinkageError e) {
                 if (LOG.isLoggable(Level.WARNING)) {
-                    LOG.log(Level.WARNING, "Error during type resolution due to: " + e);
+                    String message = "Error during type resolution of field '" + fieldImage + "' in "
+                            + typeToSearch.getType() + " due to: " + e;
+                    LOG.log(Level.WARNING, message);
                 }
                 // TODO : report a missing class once we start doing that...
                 return null;
@@ -1174,6 +1185,66 @@ public class ClassTypeResolver extends JavaParserVisitorAdapter {
         return data;
     }
 
+    @Override
+    public Object visit(ASTSwitchExpression node, Object data) {
+        super.visit(node, data);
+
+        JavaTypeDefinition type = null;
+        // first try to determine the type based on the first expression/break/yield of a switch rule
+        List<ASTSwitchLabeledRule> rules = node.findChildrenOfType(ASTSwitchLabeledRule.class);
+        for (ASTSwitchLabeledRule rule : rules) {
+            Node body = rule.jjtGetChild(1); // second child is either Expression, Block, ThrowStatement
+            if (body instanceof ASTExpression) {
+                type = ((ASTExpression) body).getTypeDefinition();
+                break;
+            } else if (body instanceof ASTBlock) {
+                List<ASTBreakStatement> breaks = body.findDescendantsOfType(ASTBreakStatement.class);
+                if (!breaks.isEmpty()) {
+                    ASTExpression expression = breaks.get(0).getFirstChildOfType(ASTExpression.class);
+                    if (expression != null) {
+                        type = expression.getTypeDefinition();
+                        break;
+                    }
+                }
+                List<ASTYieldStatement> yields = body.findDescendantsOfType(ASTYieldStatement.class);
+                if (!yields.isEmpty()) {
+                    ASTExpression expression = yields.get(0).getFirstChildOfType(ASTExpression.class);
+                    if (expression != null) {
+                        type = expression.getTypeDefinition();
+                        break;
+                    }
+                }
+            }
+        }
+        if (type == null) {
+            // now check the labels and their expressions of break/yield statements
+            for (int i = 0; i < node.jjtGetNumChildren(); i++) {
+                Node child = node.jjtGetChild(i);
+                if (child instanceof ASTBlockStatement) {
+                    List<ASTBreakStatement> breaks = child.findDescendantsOfType(ASTBreakStatement.class);
+                    if (!breaks.isEmpty()) {
+                        ASTExpression expression = breaks.get(0).getFirstChildOfType(ASTExpression.class);
+                        if (expression != null) {
+                            type = expression.getTypeDefinition();
+                            break;
+                        }
+                    }
+                    List<ASTYieldStatement> yields = child.findDescendantsOfType(ASTYieldStatement.class);
+                    if (!yields.isEmpty()) {
+                        ASTExpression expression = yields.get(0).getFirstChildOfType(ASTExpression.class);
+                        if (expression != null && expression.getTypeDefinition() != null) {
+                            type = expression.getTypeDefinition();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        node.setTypeDefinition(type);
+        return data;
+    }
+
 
     @Override
     public Object visit(ASTFormalParameter node, Object data) {
@@ -1214,6 +1285,13 @@ public class ClassTypeResolver extends JavaParserVisitorAdapter {
 
     @Override
     public Object visit(ASTSingleMemberAnnotation node, Object data) {
+        super.visit(node, data);
+        rollupTypeUnary(node);
+        return data;
+    }
+
+    @Override
+    public Object visit(ASTYieldStatement node, Object data) {
         super.visit(node, data);
         rollupTypeUnary(node);
         return data;
@@ -1358,7 +1436,9 @@ public class ClassTypeResolver extends JavaParserVisitorAdapter {
             }
         } else {
             JavaTypeDefinition def = JavaTypeDefinition.forClass(myType);
-            node.setTypeDefinition(def.withDimensions(arrayDimens));
+            if (def != null) {
+                node.setTypeDefinition(def.withDimensions(arrayDimens));
+            }
         }
     }
 

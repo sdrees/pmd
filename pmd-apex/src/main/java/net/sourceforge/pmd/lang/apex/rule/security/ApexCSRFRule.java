@@ -6,7 +6,6 @@ package net.sourceforge.pmd.lang.apex.rule.security;
 
 import net.sourceforge.pmd.lang.apex.ast.ASTMethod;
 import net.sourceforge.pmd.lang.apex.ast.ASTUserClass;
-import net.sourceforge.pmd.lang.apex.ast.ApexNode;
 import net.sourceforge.pmd.lang.apex.rule.AbstractApexRule;
 
 /**
@@ -31,7 +30,7 @@ public class ApexCSRFRule extends AbstractApexRule {
             return data; // stops all the rules
         }
 
-        return visit((ApexNode<?>) node, data);
+        return super.visit(node, data);
     }
 
     @Override
@@ -47,14 +46,14 @@ public class ApexCSRFRule extends AbstractApexRule {
      * @param data
      */
     private void checkForCSRF(ASTMethod node, Object data) {
-        if (node.getNode().getMethodInfo().isConstructor()) {
+        if (node.isConstructor()) {
             if (Helper.foundAnyDML(node)) {
                 addViolation(data, node);
             }
 
         }
 
-        String name = node.getNode().getMethodInfo().getName();
+        String name = node.getImage();
         if (name.equalsIgnoreCase(INIT)) {
             if (Helper.foundAnyDML(node)) {
                 addViolation(data, node);

@@ -24,7 +24,7 @@ public class RuleSetFactoryCompatibilityTest {
         final String ruleset = "<?xml version=\"1.0\"?>\n" + "\n" + "<ruleset name=\"Test\"\n"
                 + "    xmlns=\"http://pmd.sourceforge.net/ruleset/2.0.0\"\n"
                 + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd\">\n"
+                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd\">\n"
                 + "  <description>Test</description>\n" + "\n"
                 + " <rule ref=\"rulesets/dummy/notexisting.xml/DummyBasicMockRule\" />\n" + "</ruleset>\n";
 
@@ -40,7 +40,7 @@ public class RuleSetFactoryCompatibilityTest {
         final String ruleset = "<?xml version=\"1.0\"?>\n" + "\n" + "<ruleset name=\"Test\"\n"
                 + "    xmlns=\"http://pmd.sourceforge.net/ruleset/2.0.0\"\n"
                 + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd\">\n"
+                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd\">\n"
                 + "  <description>Test</description>\n" + "\n"
                 + " <rule ref=\"rulesets/dummy/notexisting.xml/OldDummyBasicMockRule\" />\n" + "</ruleset>\n";
 
@@ -62,7 +62,7 @@ public class RuleSetFactoryCompatibilityTest {
         final String ruleset = "<?xml version=\"1.0\"?>\n" + "\n" + "<ruleset name=\"Test\"\n"
                 + "    xmlns=\"http://pmd.sourceforge.net/ruleset/2.0.0\"\n"
                 + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd\">\n"
+                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd\">\n"
                 + "  <description>Test</description>\n" + "\n" + " <rule ref=\"rulesets/dummy/basic.xml\">\n"
                 + "   <exclude name=\"OldNameOfSampleXPathRule\"/>\n" + " </rule>\n" + "</ruleset>\n";
 
@@ -76,6 +76,28 @@ public class RuleSetFactoryCompatibilityTest {
     }
 
     @Test
+    public void testExclusionRenamedAndMoved() throws Exception {
+        final String ruleset = "<?xml version=\"1.0\"?>\n" + "\n" + "<ruleset name=\"Test\"\n"
+                + "    xmlns=\"http://pmd.sourceforge.net/ruleset/2.0.0\"\n"
+                + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd\">\n"
+                + "  <description>Test</description>\n" + "\n"
+                + " <rule ref=\"rulesets/dummy/oldbasic.xml\">\n"
+                + "   <exclude name=\"OldDummyBasicMockRule\"/>\n"
+                + " </rule>\n"
+                + "</ruleset>\n";
+
+        RuleSetFactoryCompatibility rsfc = new RuleSetFactoryCompatibility();
+        rsfc.addFilterRuleMovedAndRenamed("dummy", "oldbasic", "OldDummyBasicMockRule", "basic", "NewNameForDummyBasicMockRule");
+
+        InputStream stream = new ByteArrayInputStream(ruleset.getBytes(ISO_8859_1));
+        Reader filtered = rsfc.filterRuleSetFile(stream);
+        String out = IOUtils.toString(filtered);
+
+        Assert.assertTrue(out.contains("OldDummyBasicMockRule"));
+    }
+
+    @Test
     public void testFilter() throws Exception {
         RuleSetFactoryCompatibility rsfc = new RuleSetFactoryCompatibility();
         rsfc.addFilterRuleMoved("dummy", "notexisting", "basic", "DummyBasicMockRule");
@@ -85,7 +107,7 @@ public class RuleSetFactoryCompatibilityTest {
         String in = "<?xml version=\"1.0\"?>\n" + "\n" + "<ruleset name=\"Test\"\n"
                 + "    xmlns=\"http://pmd.sourceforge.net/ruleset/2.0.0\"\n"
                 + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd\">\n"
+                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd\">\n"
                 + "  <description>Test</description>\n" + "\n"
                 + " <rule ref=\"rulesets/dummy/notexisting.xml/DummyBasicMockRule\" />\n"
                 + " <rule ref=\"rulesets/dummy/basic.xml/DeletedRule\" />\n"
@@ -111,7 +133,7 @@ public class RuleSetFactoryCompatibilityTest {
         String in = "<?xml version=\"1.0\"?>\n" + "\n" + "<ruleset name=\"Test\"\n"
                 + "    xmlns=\"http://pmd.sourceforge.net/ruleset/2.0.0\"\n"
                 + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd\">\n"
+                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd\">\n"
                 + "  <description>Test</description>\n" + "\n" + " <rule ref=\"rulesets/dummy/basic.xml\">\n"
                 + "   <exclude name=\"AnotherOldNameOfBasicMockRule\"/>\n" + " </rule>\n" + "</ruleset>\n";
         InputStream stream = new ByteArrayInputStream(in.getBytes(ISO_8859_1));

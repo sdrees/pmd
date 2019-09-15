@@ -21,7 +21,14 @@ public class LanguageVersionTest extends AbstractLanguageVersionTest {
 
     @Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] { { ScalaLanguageModule.NAME, ScalaLanguageModule.TERSE_NAME, "",
-            LanguageRegistry.getLanguage(ScalaLanguageModule.NAME).getDefaultVersion(), }, });
+        return Arrays.asList(new Object[][] {
+            { ScalaLanguageModule.NAME, ScalaLanguageModule.TERSE_NAME, "2.13",
+                LanguageRegistry.getLanguage(ScalaLanguageModule.NAME).getVersion("2.13"), },
+            { ScalaLanguageModule.NAME, ScalaLanguageModule.TERSE_NAME, "2.12",
+                LanguageRegistry.getLanguage(ScalaLanguageModule.NAME).getVersion("2.12"), },
+            { ScalaLanguageModule.NAME, ScalaLanguageModule.TERSE_NAME, "2.11",
+                LanguageRegistry.getLanguage(ScalaLanguageModule.NAME).getVersion("2.11"), },
+            { ScalaLanguageModule.NAME, ScalaLanguageModule.TERSE_NAME, "2.10",
+                LanguageRegistry.getLanguage(ScalaLanguageModule.NAME).getVersion("2.10"), }, });
     }
 }

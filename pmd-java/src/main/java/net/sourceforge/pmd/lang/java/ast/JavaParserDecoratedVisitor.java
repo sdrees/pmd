@@ -14,7 +14,10 @@ package net.sourceforge.pmd.lang.java.ast;
  *
  * @author Clément Fournier
  * @since 6.0.0
+ *
+ * @deprecated Visitor decorators are deprecated because they lead to fragile code.
  */
+@Deprecated
 public class JavaParserDecoratedVisitor implements JavaParserVisitor {
 
 
@@ -862,6 +865,36 @@ public class JavaParserDecoratedVisitor implements JavaParserVisitor {
 
     @Override
     public Object visit(ASTModuleName node, Object data) {
+        visitor.visit(node, data);
+        return visit((JavaNode) node, data);
+    }
+
+    @Override
+    public Object visit(ASTSwitchExpression node, Object data) {
+        visitor.visit(node, data);
+        return visit((JavaNode) node, data);
+    }
+
+    @Override
+    public Object visit(ASTSwitchLabeledBlock node, Object data) {
+        visitor.visit(node, data);
+        return visit((JavaNode) node, data);
+    }
+
+    @Override
+    public Object visit(ASTSwitchLabeledExpression node, Object data) {
+        visitor.visit(node, data);
+        return visit((JavaNode) node, data);
+    }
+
+    @Override
+    public Object visit(ASTSwitchLabeledThrowStatement node, Object data) {
+        visitor.visit(node, data);
+        return visit((JavaNode) node, data);
+    }
+
+    @Override
+    public Object visit(ASTYieldStatement node, Object data) {
         visitor.visit(node, data);
         return visit((JavaNode) node, data);
     }

@@ -5,9 +5,10 @@ permalink: pmd_rules_java_errorprone.html
 folder: pmd/rules/java
 sidebaractiveurl: /pmd_rules_java.html
 editmepath: ../pmd-java/src/main/resources/category/java/errorprone.xml
-keywords: Error Prone, AssignmentInOperand, AssignmentToNonFinalStatic, AvoidAccessibilityAlteration, AvoidAssertAsIdentifier, AvoidBranchingStatementAsLastInLoop, AvoidCallingFinalize, AvoidCatchingNPE, AvoidCatchingThrowable, AvoidDecimalLiteralsInBigDecimalConstructor, AvoidDuplicateLiterals, AvoidEnumAsIdentifier, AvoidFieldNameMatchingMethodName, AvoidFieldNameMatchingTypeName, AvoidInstanceofChecksInCatchClause, AvoidLiteralsInIfCondition, AvoidLosingExceptionInformation, AvoidMultipleUnaryOperators, AvoidUsingOctalValues, BadComparison, BeanMembersShouldSerialize, BrokenNullCheck, CallSuperFirst, CallSuperLast, CheckSkipResult, ClassCastExceptionWithToArray, CloneMethodMustBePublic, CloneMethodMustImplementCloneable, CloneMethodReturnTypeMustMatchClassName, CloneThrowsCloneNotSupportedException, CloseResource, CompareObjectsWithEquals, ConstructorCallsOverridableMethod, DataflowAnomalyAnalysis, DoNotCallGarbageCollectionExplicitly, DoNotCallSystemExit, DoNotExtendJavaLangThrowable, DoNotHardCodeSDCard, DoNotThrowExceptionInFinally, DontImportSun, DontUseFloatTypeForLoopIndices, EmptyCatchBlock, EmptyFinalizer, EmptyFinallyBlock, EmptyIfStmt, EmptyInitializer, EmptyStatementBlock, EmptyStatementNotInLoop, EmptySwitchStatements, EmptySynchronizedBlock, EmptyTryBlock, EmptyWhileStmt, EqualsNull, FinalizeDoesNotCallSuperFinalize, FinalizeOnlyCallsSuperFinalize, FinalizeOverloaded, FinalizeShouldBeProtected, IdempotentOperations, ImportFromSamePackage, InstantiationToGetClass, InvalidSlf4jMessageFormat, JumbledIncrementer, JUnitSpelling, JUnitStaticSuite, LoggerIsNotStaticFinal, MethodWithSameNameAsEnclosingClass, MisplacedNullCheck, MissingBreakInSwitch, MissingSerialVersionUID, MissingStaticMethodInNonInstantiatableClass, MoreThanOneLogger, NonCaseLabelInSwitchStatement, NonStaticInitializer, NullAssignment, OverrideBothEqualsAndHashcode, ProperCloneImplementation, ProperLogger, ReturnEmptyArrayRatherThanNull, ReturnFromFinallyBlock, SimpleDateFormatNeedsLocale, SingleMethodSingleton, SingletonClassReturningNewInstance, StaticEJBFieldShouldBeFinal, StringBufferInstantiationWithChar, SuspiciousEqualsMethodName, SuspiciousHashcodeMethodName, SuspiciousOctalEscape, TestClassWithoutTestCases, UnconditionalIfStatement, UnnecessaryBooleanAssertion, UnnecessaryCaseChange, UnnecessaryConversionTemporary, UnusedNullCheckInEquals, UseCorrectExceptionLogging, UseEqualsToCompareStrings, UselessOperationOnImmutable, UseLocaleWithCaseConversions, UseProperClassLoader
+keywords: Error Prone, AssignmentInOperand, AssignmentToNonFinalStatic, AvoidAccessibilityAlteration, AvoidAssertAsIdentifier, AvoidBranchingStatementAsLastInLoop, AvoidCallingFinalize, AvoidCatchingNPE, AvoidCatchingThrowable, AvoidDecimalLiteralsInBigDecimalConstructor, AvoidDuplicateLiterals, AvoidEnumAsIdentifier, AvoidFieldNameMatchingMethodName, AvoidFieldNameMatchingTypeName, AvoidInstanceofChecksInCatchClause, AvoidLiteralsInIfCondition, AvoidLosingExceptionInformation, AvoidMultipleUnaryOperators, AvoidUsingOctalValues, BadComparison, BeanMembersShouldSerialize, BrokenNullCheck, CallSuperFirst, CallSuperLast, CheckSkipResult, ClassCastExceptionWithToArray, CloneMethodMustBePublic, CloneMethodMustImplementCloneable, CloneMethodReturnTypeMustMatchClassName, CloneThrowsCloneNotSupportedException, CloseResource, CompareObjectsWithEquals, ConstructorCallsOverridableMethod, DataflowAnomalyAnalysis, DetachedTestCase, DoNotCallGarbageCollectionExplicitly, DoNotCallSystemExit, DoNotExtendJavaLangThrowable, DoNotHardCodeSDCard, DoNotThrowExceptionInFinally, DontImportSun, DontUseFloatTypeForLoopIndices, EmptyCatchBlock, EmptyFinalizer, EmptyFinallyBlock, EmptyIfStmt, EmptyInitializer, EmptyStatementBlock, EmptyStatementNotInLoop, EmptySwitchStatements, EmptySynchronizedBlock, EmptyTryBlock, EmptyWhileStmt, EqualsNull, FinalizeDoesNotCallSuperFinalize, FinalizeOnlyCallsSuperFinalize, FinalizeOverloaded, FinalizeShouldBeProtected, IdempotentOperations, ImportFromSamePackage, InstantiationToGetClass, InvalidSlf4jMessageFormat, JumbledIncrementer, JUnitSpelling, JUnitStaticSuite, LoggerIsNotStaticFinal, MethodWithSameNameAsEnclosingClass, MisplacedNullCheck, MissingBreakInSwitch, MissingSerialVersionUID, MissingStaticMethodInNonInstantiatableClass, MoreThanOneLogger, NonCaseLabelInSwitchStatement, NonStaticInitializer, NullAssignment, OverrideBothEqualsAndHashcode, ProperCloneImplementation, ProperLogger, ReturnEmptyArrayRatherThanNull, ReturnFromFinallyBlock, SimpleDateFormatNeedsLocale, SingleMethodSingleton, SingletonClassReturningNewInstance, StaticEJBFieldShouldBeFinal, StringBufferInstantiationWithChar, SuspiciousEqualsMethodName, SuspiciousHashcodeMethodName, SuspiciousOctalEscape, TestClassWithoutTestCases, UnconditionalIfStatement, UnnecessaryBooleanAssertion, UnnecessaryCaseChange, UnnecessaryConversionTemporary, UnusedNullCheckInEquals, UseCorrectExceptionLogging, UseEqualsToCompareStrings, UselessOperationOnImmutable, UseLocaleWithCaseConversions, UseProperClassLoader
 language: Java
 ---
+<!-- DO NOT EDIT THIS FILE. This file is generated from file ../pmd-java/src/main/resources/category/java/errorprone.xml. -->
 ## AssignmentInOperand
 
 **Since:** PMD 1.03
@@ -21,26 +22,38 @@ Avoid assignments in operands; this can make code more complicated and harder to
 **Example(s):**
 
 ``` java
-public void bar() {
+{%raw%}public void bar() {
     int x = 2;
     if ((x = getX()) == 3) {
       System.out.println("3!");
     }
-}
+}{%endraw%}
 ```
 
 **This rule has the following properties:**
 
 |Name|Default Value|Description|Multivalued|
 |----|-------------|-----------|-----------|
-|allowIncrementDecrement|false|Allow increment or decrement operators within the conditional expression of an if, for, or while statement|no|
-|allowWhile|false|Allow assignment within the conditional expression of a while statement|no|
-|allowFor|false|Allow assignment within the conditional expression of a for statement|no|
 |allowIf|false|Allow assignment within the conditional expression of an if statement|no|
+|allowFor|false|Allow assignment within the conditional expression of a for statement|no|
+|allowWhile|false|Allow assignment within the conditional expression of a while statement|no|
+|allowIncrementDecrement|false|Allow increment or decrement operators within the conditional expression of an if, for, or while statement|no|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/AssignmentInOperand" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/AssignmentInOperand">
+    <properties>
+        <property name="allowIf" value="false" />
+        <property name="allowFor" value="false" />
+        <property name="allowWhile" value="false" />
+        <property name="allowIncrementDecrement" value="false" />
+    </properties>
+</rule>
 ```
 
 ## AssignmentToNonFinalStatic
@@ -56,12 +69,12 @@ Identifies a possible unsafe usage of a static field.
 **Example(s):**
 
 ``` java
-public class StaticField {
+{%raw%}public class StaticField {
    static int x;
    public FinalFields(int y) {
     x = y; // unsafe
    }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -108,7 +121,7 @@ and
 **Example(s):**
 
 ``` java
-import java.lang.reflect.AccessibleObject;
+{%raw%}import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 import java.security.PrivilegedAction;
 
@@ -134,7 +147,7 @@ public class Violation {
       // Possible call to forbidden PrivilegedAction
     PrivilegedAction priv = (PrivilegedAction) new Object(); priv.run();
   }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -158,11 +171,11 @@ Use of the term 'assert' will conflict with newer versions of Java since it is a
 **Example(s):**
 
 ``` java
-public class A {
+{%raw%}public class A {
     public class Foo {
         String assert = "foo";
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -184,7 +197,7 @@ Ensure that the usage is not a bug, or consider using another approach.
 **Example(s):**
 
 ``` java
-// unusual use of branching statement in a loop
+{%raw%}// unusual use of branching statement in a loop
 for (int i = 0; i < 10; i++) {
     if (i*i <= 25) {
         continue;
@@ -197,20 +210,31 @@ for (int i = 0; i < 10; i++) {
     if (i*i > 25) {
         break;
     }
-}
+}{%endraw%}
 ```
 
 **This rule has the following properties:**
 
 |Name|Default Value|Description|Multivalued|
 |----|-------------|-----------|-----------|
-|checkReturnLoopTypes|for \| do \| while|Check for return statements in loop types|yes. Delimiter is '\|'.|
-|checkContinueLoopTypes|for \| do \| while|Check for continue statements in loop types|yes. Delimiter is '\|'.|
-|checkBreakLoopTypes|for \| do \| while|Check for break statements in loop types|yes. Delimiter is '\|'.|
+|checkBreakLoopTypes|for \| do \| while|List of loop types in which break statements will be checked|yes. Delimiter is '\|'.|
+|checkContinueLoopTypes|for \| do \| while|List of loop types in which continue statements will be checked|yes. Delimiter is '\|'.|
+|checkReturnLoopTypes|for \| do \| while|List of loop types in which return statements will be checked|yes. Delimiter is '\|'.|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop">
+    <properties>
+        <property name="checkBreakLoopTypes" value="for|do|while" />
+        <property name="checkContinueLoopTypes" value="for|do|while" />
+        <property name="checkReturnLoopTypes" value="for|do|while" />
+    </properties>
+</rule>
 ```
 
 ## AvoidCallingFinalize
@@ -229,10 +253,10 @@ Note that Oracle has declared Object.finalize() as deprecated since JDK 9.
 **Example(s):**
 
 ``` java
-void foo() {
+{%raw%}void foo() {
     Bar b = new Bar();
     b.finalize();
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -258,14 +282,14 @@ original error, causing other, more subtle problems later on.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     void bar() {
         try {
             // do something
         } catch (NullPointerException npe) {
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -287,13 +311,13 @@ OutOfMemoryError that should be exposed and managed separately.
 **Example(s):**
 
 ``` java
-public void bar() {
+{%raw%}public void bar() {
     try {
         // do something
     } catch (Throwable th) {  // should not catch Throwable
         th.printStackTrace();
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -307,13 +331,13 @@ public void bar() {
 
 **Priority:** Medium (3)
 
-One might assume that the result of "new BigDecimal(0.1)" is exactly equal to 0.1, but it is actually
+One might assume that the result of &quot;new BigDecimal(0.1)&quot; is exactly equal to 0.1, but it is actually
 equal to .1000000000000000055511151231257827021181583404541015625.
 This is because 0.1 cannot be represented exactly as a double (or as a binary fraction of any finite
 length). Thus, the long value that is being passed in to the constructor is not exactly equal to 0.1,
 appearances notwithstanding.
 
-The (String) constructor, on the other hand, is perfectly predictable: 'new BigDecimal("0.1")' is
+The (String) constructor, on the other hand, is perfectly predictable: 'new BigDecimal(&quot;0.1&quot;)' is
 exactly equal to 0.1, as one would expect.  Therefore, it is generally recommended that the
 (String) constructor be used in preference to this one.
 
@@ -343,11 +367,11 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
 **Example(s):**
 
 ``` java
-BigDecimal bd = new BigDecimal(1.123);       // loss of precision, this would trigger the rule
+{%raw%}BigDecimal bd = new BigDecimal(1.123);       // loss of precision, this would trigger the rule
 
 BigDecimal bd = new BigDecimal("1.123");     // preferred approach
 
-BigDecimal bd = new BigDecimal(12);          // preferred approach, ok for integer values
+BigDecimal bd = new BigDecimal(12);          // preferred approach, ok for integer values{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -368,29 +392,42 @@ Code containing duplicate String literals can usually be improved by declaring t
 **Example(s):**
 
 ``` java
-private void bar() {
+{%raw%}private void bar() {
      buz("Howdy");
      buz("Howdy");
      buz("Howdy");
      buz("Howdy");
 }
-private void buz(String x) {}
+private void buz(String x) {}{%endraw%}
 ```
 
 **This rule has the following properties:**
 
 |Name|Default Value|Description|Multivalued|
 |----|-------------|-----------|-----------|
-|exceptionfile||File containing strings to skip (one string per line), only used if ignore list is not set|no|
+|exceptionfile||<span style="border-radius: 0.25em; color: #fff; padding: 0.2em 0.6em 0.3em; display: inline; background-color: #d9534f; font-size: 75%;">Deprecated</span> (Use 'exceptionList' property) File containing strings to skip (one string per line), only used if ignore list is not set. File must be UTF-8 encoded.|no|
 |separator|,|Ignore list separator|no|
-|exceptionList||Strings to ignore|no|
 |maxDuplicateLiterals|4|Max duplicate literals|no|
 |minimumLength|3|Minimum string length to check|no|
 |skipAnnotations|false|Skip literals within annotations|no|
+|exceptionList||List of literals to ignore. A literal is ignored if its image can be found in this list. Components of this list should not be surrounded by double quotes.|no|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/AvoidDuplicateLiterals" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/AvoidDuplicateLiterals">
+    <properties>
+        <property name="separator" value="," />
+        <property name="maxDuplicateLiterals" value="4" />
+        <property name="minimumLength" value="3" />
+        <property name="skipAnnotations" value="false" />
+        <property name="exceptionList" value="" />
+    </properties>
+</rule>
 ```
 
 ## AvoidEnumAsIdentifier
@@ -409,11 +446,11 @@ Use of the term 'enum' will conflict with newer versions of Java since it is a r
 **Example(s):**
 
 ``` java
-public class A {
+{%raw%}public class A {
     public class Foo {
         String enum = "foo";
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -436,12 +473,12 @@ Smalltalk often prefer this approach as the methods denote accessor methods.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     Object bar;
     // bar is data or an action or both?
     void bar() {
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -463,9 +500,9 @@ This probably means that type and/or field names should be chosen more carefully
 **Example(s):**
 
 ``` java
-public class Foo extends Bar {
+{%raw%}public class Foo extends Bar {
     int foo;    // There is probably a better name that can be used
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -494,7 +531,7 @@ Each caught exception type should be handled in its own catch clause.
 **Example(s):**
 
 ``` java
-try { // Avoid this
+{%raw%}try { // Avoid this
     // do something
 } catch (Exception ee) {
     if (ee instanceof IOException) {
@@ -506,7 +543,7 @@ try {  // Prefer this:
     // do something
 } catch (IOException ee) {
     cleanup();
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -521,8 +558,8 @@ try {  // Prefer this:
 **Priority:** Medium (3)
 
 Avoid using hard-coded literals in conditional statements. By declaring them as static variables
-or private members with descriptive names maintainability is enhanced. By default, the literals "-1" and "0" are ignored.
-More exceptions can be defined with the property "ignoreMagicNumbers".
+or private members with descriptive names maintainability is enhanced. By default, the literals &quot;-1&quot; and &quot;0&quot; are ignored.
+More exceptions can be defined with the property &quot;ignoreMagicNumbers&quot;.
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
@@ -535,7 +572,7 @@ More exceptions can be defined with the property "ignoreMagicNumbers".
 **Example(s):**
 
 ``` java
-private static final int MAX_NUMBER_OF_REQUESTS = 10;
+{%raw%}private static final int MAX_NUMBER_OF_REQUESTS = 10;
 
 public void checkRequests() {
 
@@ -552,7 +589,7 @@ public void checkRequests() {
 
     if (aDouble > 0.0) {}                  // magic number 0.0
     if (aDouble >= Double.MIN_VALUE) {}    // preferred approach
-}
+}{%endraw%}
 ```
 
 **This rule has the following properties:**
@@ -561,9 +598,18 @@ public void checkRequests() {
 |----|-------------|-----------|-----------|
 |ignoreMagicNumbers|-1,0|Comma-separated list of magic numbers, that should be ignored|no|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition">
+    <properties>
+        <property name="ignoreMagicNumbers" value="-1,0" />
+    </properties>
+</rule>
 ```
 
 ## AvoidLosingExceptionInformation
@@ -594,13 +640,13 @@ only add to code size.  Either remove the invocation, or use the return result.
 **Example(s):**
 
 ``` java
-public void bar() {
+{%raw%}public void bar() {
     try {
         // do something
     } catch (SomeException se) {
         se.getMessage();
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -622,7 +668,7 @@ Ensure that the intended usage is not a bug, or consider simplifying the express
 **Example(s):**
 
 ``` java
-// These are typo bugs, or at best needlessly complex and confusing:
+{%raw%}// These are typo bugs, or at best needlessly complex and confusing:
 int i = - -1;
 int j = + - +1;
 int z = ~~2;
@@ -638,7 +684,7 @@ boolean c = false;
 
 // And these just make your brain hurt:
 int i = ~-2;
-int j = -~7;
+int j = -~7;{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -660,9 +706,9 @@ interpreted as an octal value.
 **Example(s):**
 
 ``` java
-int i = 012;    // set i with 10 not 12
+{%raw%}int i = 012;    // set i with 10 not 12
 int j = 010;    // set j with 8 not 10
-k = i * j;      // set k with 80 not 120
+k = i * j;      // set k with 80 not 120{%endraw%}
 ```
 
 **This rule has the following properties:**
@@ -671,9 +717,18 @@ k = i * j;      // set k with 80 not 120
 |----|-------------|-----------|-----------|
 |strict|false|Detect violations between 00 and 07|no|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/AvoidUsingOctalValues" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/AvoidUsingOctalValues">
+    <properties>
+        <property name="strict" value="false" />
+    </properties>
+</rule>
 ```
 
 ## BadComparison
@@ -695,7 +750,7 @@ precision when comparing floating point numbers these are likely to cause logic 
 **Example(s):**
 
 ``` java
-boolean x = (y == Double.NaN);
+{%raw%}boolean x = (y == Double.NaN);{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -719,7 +774,7 @@ naming conventions, i.e. for a variable named foo, getFoo() and setFoo() accesso
 **Example(s):**
 
 ``` java
-private transient int someFoo;  // good, it's transient
+{%raw%}private transient int someFoo;  // good, it's transient
 private static int otherFoo;    // also OK
 private int moreFoo;            // OK, has proper accessors, see below
 private int badFoo;             // bad, should be marked transient
@@ -730,18 +785,29 @@ private void setMoreFoo(int moreFoo){
 
 private int getMoreFoo(){
       return this.moreFoo;
-}
+}{%endraw%}
 ```
 
 **This rule has the following properties:**
 
 |Name|Default Value|Description|Multivalued|
 |----|-------------|-----------|-----------|
-|prefix||A variable prefix to skip, i.e., m_|no|
+|ignoredAnnotations|lombok.Data \| lombok.Getter \| lombok.Value|Fully qualified names of the annotation types that should be ignored by this rule|yes. Delimiter is '\|'.|
+|prefix||A variable prefix to skip, i.e., m\_|no|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/BeanMembersShouldSerialize" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/BeanMembersShouldSerialize">
+    <properties>
+        <property name="ignoredAnnotations" value="lombok.Data|lombok.Getter|lombok.Value" />
+        <property name="prefix" value="" />
+    </properties>
+</rule>
 ```
 
 ## BrokenNullCheck
@@ -751,21 +817,21 @@ private int getMoreFoo(){
 **Priority:** Medium High (2)
 
 The null check is broken since it will throw a NullPointerException itself.
-It is likely that you used || instead of && or vice versa.
+It is likely that you used || instead of &amp;&amp; or vice versa.
 
 **This rule is defined by the following Java class:** [net.sourceforge.pmd.lang.java.rule.errorprone.BrokenNullCheckRule](https://github.com/pmd/pmd/blob/master/pmd-java/src/main/java/net/sourceforge/pmd/lang/java/rule/errorprone/BrokenNullCheckRule.java)
 
 **Example(s):**
 
 ``` java
-public String bar(String string) {
+{%raw%}public String bar(String string) {
   // should be &&
     if (string!=null || !string.equals(""))
         return string;
   // should be ||
     if (string==null && string.equals(""))
         return string;
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -805,12 +871,12 @@ Super should be called at the start of the method
 **Example(s):**
 
 ``` java
-public class DummyActivity extends Activity {
+{%raw%}public class DummyActivity extends Activity {
     public void onCreate(Bundle bundle) {
         // missing call to super.onCreate(bundle)
         foo();
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -848,12 +914,12 @@ Super should be called at the end of the method
 **Example(s):**
 
 ``` java
-public class DummyActivity extends Activity {
+{%raw%}public class DummyActivity extends Activity {
     public void onPause() {
         foo();
         // missing call to super.onPause()
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -874,7 +940,7 @@ The skip() method may skip a smaller number of bytes than requested. Check the r
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
 
    private FileInputStream _s = new FileInputStream("file");
 
@@ -889,7 +955,7 @@ public class Foo {
             throw new EOFException();
          n -= skipped;
       }
-   }
+   }{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -923,7 +989,7 @@ count(PrimarySuffix) = 1
 **Example(s):**
 
 ``` java
-Collection c = new ArrayList();
+{%raw%}Collection c = new ArrayList();
 Integer obj = new Integer(1);
 c.add(obj);
 
@@ -931,7 +997,7 @@ c.add(obj);
 Integer[] a = (Integer [])c.toArray();
 
    // this is fine and will not trigger the rule
-Integer[] b = (Integer [])c.toArray(new Integer[c.size()]);
+Integer[] b = (Integer [])c.toArray(new Integer[c.size()]);{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -945,8 +1011,8 @@ Integer[] b = (Integer [])c.toArray(new Integer[c.size()]);
 
 **Priority:** Medium (3)
 
-The java Manual says "By convention, classes that implement this interface should override
-Object.clone (which is protected) with a public method."
+The java Manual says &quot;By convention, classes that implement this interface should override
+Object.clone (which is protected) with a public method.&quot;
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
@@ -958,7 +1024,7 @@ Object.clone (which is protected) with a public method."
 **Example(s):**
 
 ``` java
-public class Foo implements Cloneable {
+{%raw%}public class Foo implements Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException { // Violation, must be public
     }
@@ -973,7 +1039,7 @@ public class Foo implements Cloneable {
 public class Foo implements Cloneable {
     @Override
     public Object clone() // Ok
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -997,11 +1063,11 @@ The rule can also detect, if the class implements or extends a Cloneable class.
 **Example(s):**
 
 ``` java
-public class MyClass {
+{%raw%}public class MyClass {
  public Object clone() throws CloneNotSupportedException {
   return foo;
  }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1035,7 +1101,7 @@ and not (ResultType//ClassOrInterfaceType/@Image = ancestor::ClassOrInterfaceDec
 **Example(s):**
 
 ``` java
-public class Foo implements Cloneable {
+{%raw%}public class Foo implements Cloneable {
     @Override
     protected Object clone() { // Violation, Object must be Foo
     }
@@ -1045,7 +1111,7 @@ public class Foo implements Cloneable {
     @Override
     public Foo clone() { //Ok
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1078,12 +1144,12 @@ and count(NameList/Name[contains
 **Example(s):**
 
 ``` java
-public class MyClass implements Cloneable{
+{%raw%}public class MyClass implements Cloneable{
     public Object clone() { // will cause an error
          MyClass clone = (MyClass)super.clone();
          return clone;
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1097,39 +1163,73 @@ public class MyClass implements Cloneable{
 
 **Priority:** Medium (3)
 
-Ensure that resources (like Connection, Statement, and ResultSet objects) are always closed after use.
+Ensure that resources (like `java.sql.Connection`, `java.sql.Statement`, and `java.sql.ResultSet` objects
+and any subtype of `java.lang.AutoCloseable`) are always closed after use.
+Failing to do so might result in resource leaks.
+
+Note: It suffices to configure the super type, e.g. `java.lang.AutoClosable`, so that this rule automatically triggers
+on any subtype (e.g. `java.io.FileInputStream`). Additionally specifying `java.sql.Connection` helps in detecting
+the types, if the type resolution / auxclasspath is not correctly setup.
+
+Note: Since PMD 6.16.0 the default value for the property `types` contains `java.lang.AutoCloseable` and detects
+now cases where the standard `java.io.*Stream` classes are involved. In order to restore the old behaviour,
+just remove &quot;AutoCloseable&quot; from the types.
 
 **This rule is defined by the following Java class:** [net.sourceforge.pmd.lang.java.rule.errorprone.CloseResourceRule](https://github.com/pmd/pmd/blob/master/pmd-java/src/main/java/net/sourceforge/pmd/lang/java/rule/errorprone/CloseResourceRule.java)
 
 **Example(s):**
 
 ``` java
-public class Bar {
-  public void foo() {
-    Connection c = pool.getConnection();
-    try {
-      // do stuff
-    } catch (SQLException ex) {
-     // handle exception
-    } finally {
-      // oops, should close the connection using 'close'!
-      // c.close();
+{%raw%}public class Bar {
+    public void withSQL() {
+        Connection c = pool.getConnection();
+        try {
+            // do stuff
+        } catch (SQLException ex) {
+           // handle exception
+        } finally {
+            // oops, should close the connection using 'close'!
+            // c.close();
+        }
     }
-  }
-}
+
+    public void withFile() {
+        InputStream file = new FileInputStream(new File("/tmp/foo"));
+        try {
+            int c = file.in();
+        } catch (IOException e) {
+            // handle exception
+        } finally {
+            // TODO: close file
+        }
+    }
+}{%endraw%}
 ```
 
 **This rule has the following properties:**
 
 |Name|Default Value|Description|Multivalued|
 |----|-------------|-----------|-----------|
-|closeAsDefaultTarget|true|Consider 'close' as a target by default|no|
-|types|java.sql.Connection , java.sql.Statement , java.sql.ResultSet|Affected types|yes. Delimiter is ','.|
 |closeTargets||Methods which may close this resource|yes. Delimiter is ','.|
+|types|java.lang.AutoCloseable , java.sql.Connection , java.sql.Statement , java.sql.ResultSet|Affected types|yes. Delimiter is ','.|
+|closeAsDefaultTarget|true|Consider 'close' as a target by default|no|
+|allowedResourceTypes|java.io.ByteArrayOutputStream \| java.io.ByteArrayInputStream \| java.io.StringWriter \| java.io.CharArrayWriter \| java.util.stream.Stream|Exact class names that do not need to be closed|yes. Delimiter is '\|'.|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/CloseResource" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/CloseResource">
+    <properties>
+        <property name="closeTargets" value="" />
+        <property name="types" value="java.lang.AutoCloseable,java.sql.Connection,java.sql.Statement,java.sql.ResultSet" />
+        <property name="closeAsDefaultTarget" value="true" />
+        <property name="allowedResourceTypes" value="java.io.ByteArrayOutputStream|java.io.ByteArrayInputStream|java.io.StringWriter|java.io.CharArrayWriter|java.util.stream.Stream" />
+    </properties>
+</rule>
 ```
 
 ## CompareObjectsWithEquals
@@ -1145,11 +1245,11 @@ Use equals() to compare object references; avoid comparing them with ==.
 **Example(s):**
 
 ``` java
-class Foo {
+{%raw%}class Foo {
   boolean bar(String a, String b) {
     return a == b;
   }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1176,7 +1276,7 @@ private method bar() that calls a public method buz(), this denotes a problem.
 **Example(s):**
 
 ``` java
-public class SeniorClass {
+{%raw%}public class SeniorClass {
   public SeniorClass(){
       toString(); //may throw NullPointerException if overridden
   }
@@ -1193,7 +1293,7 @@ public class JuniorClass extends SeniorClass {
   public String toString(){
     return name.toUpperCase();
   }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1219,24 +1319,85 @@ From those informations there can be found various problems.
 **Example(s):**
 
 ``` java
-public void foo() {
+{%raw%}public void foo() {
   int buz = 5;
   buz = 6; // redefinition of buz -> dd-anomaly
   foo(buz);
   buz = 2;
-} // buz is undefined when leaving scope -> du-anomaly
+} // buz is undefined when leaving scope -> du-anomaly{%endraw%}
 ```
 
 **This rule has the following properties:**
 
 |Name|Default Value|Description|Multivalued|
 |----|-------------|-----------|-----------|
-|maxViolations|100|Maximum number of anomalies per class|no|
 |maxPaths|1000|Maximum number of checked paths per method. A lower value will increase the performance of the rule but may decrease anomalies found.|no|
+|maxViolations|100|Maximum number of anomalies per class|no|
+
+**Use this rule with the default properties by just referencing it:**
+``` xml
+<rule ref="category/java/errorprone.xml/DataflowAnomalyAnalysis" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/DataflowAnomalyAnalysis">
+    <properties>
+        <property name="maxPaths" value="1000" />
+        <property name="maxViolations" value="100" />
+    </properties>
+</rule>
+```
+
+## DetachedTestCase
+
+**Since:** PMD 6.13.0
+
+**Priority:** Medium (3)
+
+The method appears to be a test case since it has public or default visibility,
+non-static access, no arguments, no return value, has no annotations, but is a
+member of a class that has one or more JUnit test cases. If it is a utility
+method, it should likely have private visibility. If it is an ignored test, it
+should be annotated with @Test and @Ignore.
+
+**This rule is defined by the following XPath expression:**
+``` xpath
+//ClassOrInterfaceBodyDeclaration
+[../ClassOrInterfaceBodyDeclaration/Annotation/*/Name
+        [pmd-java:typeIs('org.junit.Test')
+         or pmd-java:typeIs('org.junit.jupiter.api.Test')
+         or pmd-java:typeIs('org.junit.jupiter.api.RepeatedTest')
+         or pmd-java:typeIs('org.junit.jupiter.api.TestFactory')
+         or pmd-java:typeIs('org.junit.jupiter.api.TestTemplate')
+         or pmd-java:typeIs('org.junit.jupiter.params.ParameterizedTest')]
+]
+[not(Annotation)]
+[MethodDeclaration[(@Public = true() or @PackagePrivate = true()) and @Static = false() and
+        ResultType[@Void = true()] and
+        MethodDeclarator/FormalParameters[@ParameterCount = 0]
+    ]
+]
+```
+
+**Example(s):**
+
+``` java
+{%raw%}public class MyTest {
+    @Test
+    public void someTest() {
+    }
+
+    // violation: Not annotated
+    public void someOtherTest () {
+    }
+
+}{%endraw%}
+```
 
 **Use this rule by referencing it:**
 ``` xml
-<rule ref="category/java/errorprone.xml/DataflowAnomalyAnalysis" />
+<rule ref="category/java/errorprone.xml/DetachedTestCase" />
 ```
 
 ## DoNotCallGarbageCollectionExplicitly
@@ -1247,7 +1408,7 @@ public void foo() {
 
 Calls to System.gc(), Runtime.getRuntime().gc(), and System.runFinalization() are not advised. Code should have the
 same behavior whether the garbage collection is disabled using the option -Xdisableexplicitgc or not.
-Moreover, "modern" jvms do a very good job handling garbage collections. If memory usage issues unrelated to memory
+Moreover, &quot;modern&quot; jvms do a very good job handling garbage collections. If memory usage issues unrelated to memory
 leaks develop within an application, it should be dealt with JVM options rather than within the code itself.
 
 **This rule is defined by the following XPath expression:**
@@ -1266,7 +1427,7 @@ starts-with(@Image,'Runtime.getRuntime') and
 **Example(s):**
 
 ``` java
-public class GCCall {
+{%raw%}public class GCCall {
     public GCCall() {
         // Explicit gc call !
         System.gc();
@@ -1286,7 +1447,7 @@ public class GCCall {
         // Explicit gc call !
         Runtime.getRuntime().gc();
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1315,12 +1476,12 @@ application server should stop the JVM. This rule also checks for the equivalent
 **Example(s):**
 
 ``` java
-public void bar() {
+{%raw%}public void bar() {
     System.exit(0);                 // never call this when running in an application server!
 }
 public void foo() {
     Runtime.getRuntime().exit(0);   // never stop the JVM manually, the container will do this.
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1345,7 +1506,7 @@ Extend Exception or RuntimeException instead of Throwable.
 **Example(s):**
 
 ``` java
-public class Foo extends Throwable { }
+{%raw%}public class Foo extends Throwable { }{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1359,7 +1520,7 @@ public class Foo extends Throwable { }
 
 **Priority:** Medium (3)
 
-Use Environment.getExternalStorageDirectory() instead of "/sdcard"
+Use Environment.getExternalStorageDirectory() instead of &quot;/sdcard&quot;
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
@@ -1369,13 +1530,13 @@ Use Environment.getExternalStorageDirectory() instead of "/sdcard"
 **Example(s):**
 
 ``` java
-public class MyActivity extends Activity {
+{%raw%}public class MyActivity extends Activity {
     protected void foo() {
         String storageLocation = "/sdcard/mypackage";   // hard-coded, poor approach
 
        storageLocation = Environment.getExternalStorageDirectory() + "/mypackage"; // preferred approach
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1391,7 +1552,7 @@ public class MyActivity extends Activity {
 
 Throwing exceptions within a 'finally' block is confusing since they may mask other exceptions 
 or code defects.
-Note: This is a PMD implementation of the Lint4j rule "A throw in a finally block"
+Note: This is a PMD implementation of the Lint4j rule &quot;A throw in a finally block&quot;
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
@@ -1401,7 +1562,7 @@ Note: This is a PMD implementation of the Lint4j rule "A throw in a finally bloc
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     public void bar() {
         try {
             // Here do some stuff
@@ -1412,7 +1573,7 @@ public class Foo {
             throw new Exception();
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1433,8 +1594,8 @@ Avoid importing anything from the 'sun.*' packages.  These packages are not port
 **Example(s):**
 
 ``` java
-import sun.misc.foo;
-public class Foo {}
+{%raw%}import sun.misc.foo;
+public class Foo {}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1461,7 +1622,7 @@ performance need (space or time).
 **Example(s):**
 
 ``` java
-public class Count {
+{%raw%}public class Count {
   public static void main(String[] args) {
     final int START = 2000000000;
     int count = 0;
@@ -1471,7 +1632,7 @@ public class Count {
       System.out.println(count);
       //The termination test misbehaves due to floating point granularity.
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1502,13 +1663,13 @@ or reported.
 **Example(s):**
 
 ``` java
-public void doSomething() {
+{%raw%}public void doSomething() {
     try {
         FileInputStream fis = new FileInputStream("/tmp/bugger");
     } catch (IOException ioe) {
         // not good
     }
-}
+}{%endraw%}
 ```
 
 **This rule has the following properties:**
@@ -1518,9 +1679,19 @@ public void doSomething() {
 |allowCommentedBlocks|false|Empty blocks containing comments will be skipped|no|
 |allowExceptionNameRegex|^(ignored\|expected)$|Empty blocks catching exceptions with names matching this regular expression will be skipped|no|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/EmptyCatchBlock" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/EmptyCatchBlock">
+    <properties>
+        <property name="allowCommentedBlocks" value="false" />
+        <property name="allowExceptionNameRegex" value="^(ignored|expected)$" />
+    </properties>
+</rule>
 ```
 
 ## EmptyFinalizer
@@ -1540,9 +1711,9 @@ Empty finalize methods serve no purpose and should be removed. Note that Oracle 
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
    protected void finalize() {}
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1566,7 +1737,7 @@ Empty finally blocks serve no purpose and should be removed.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     public void bar() {
         try {
             int x=2;
@@ -1574,7 +1745,7 @@ public class Foo {
             // empty!
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1599,13 +1770,13 @@ Empty If Statement finds instances where a condition is checked but nothing is d
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
  void bar(int x) {
   if (x == 0) {
    // empty!
   }
  }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1629,13 +1800,13 @@ Empty initializers serve no purpose and should be removed.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
 
    static {} // Why ?
 
    {} // Again, why ?
 
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1659,7 +1830,7 @@ Empty block statements serve no purpose and should be removed.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
 
    private int _bar;
 
@@ -1668,7 +1839,7 @@ public class Foo {
       {} // But remove this.
    }
 
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1703,12 +1874,12 @@ and should be removed.
 **Example(s):**
 
 ``` java
-public void doit() {
+{%raw%}public void doit() {
       // this is probably not what you meant to do
       ;
       // the extra semicolon here this is not necessary
       System.out.println("look at the extra semicolon");;
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1732,13 +1903,13 @@ Empty switch statements serve no purpose and should be removed.
 **Example(s):**
 
 ``` java
-public void bar() {
+{%raw%}public void bar() {
     int x = 2;
     switch (x) {
         // once there was code here
         // but it's been commented out or something
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1762,13 +1933,13 @@ Empty synchronized blocks serve no purpose and should be removed.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     public void bar() {
         synchronized (this) {
             // empty!
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1792,14 +1963,14 @@ Avoid empty try blocks - what's the point?
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     public void bar() {
         try {
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1825,11 +1996,11 @@ a while loop that does a lot in the exit expression, rewrite it to make it clear
 **Example(s):**
 
 ``` java
-void bar(int a, int b) {
+{%raw%}void bar(int a, int b) {
     while (a == b) {
         // empty!
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1865,7 +2036,7 @@ Tests for null should not use the equals() method. The '==' operator should be u
 **Example(s):**
 
 ``` java
-String x = "foo";
+{%raw%}String x = "foo";
 
 if (x.equals(null)) {   // bad form
     doSomething();
@@ -1873,7 +2044,7 @@ if (x.equals(null)) {   // bad form
 
 if (x == null) {        // preferred
     doSomething();
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1910,10 +2081,10 @@ If the finalize() is implemented, its last action should be to call super.finali
 **Example(s):**
 
 ``` java
-protected void finalize() {
+{%raw%}protected void finalize() {
     something();
     // neglected to call super.finalize()
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1943,9 +2114,9 @@ If the finalize() is implemented, it should do something besides just calling su
 **Example(s):**
 
 ``` java
-protected void finalize() {
+{%raw%}protected void finalize() {
     super.finalize();
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -1973,11 +2144,11 @@ Note that Oracle has declared Object.finalize() as deprecated since JDK 9.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     // this is confusing and probably a bug
     protected void finalize(int a) {
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2006,9 +2177,9 @@ Note that Oracle has declared Object.finalize() as deprecated since JDK 9.
 **Example(s):**
 
 ``` java
-public void finalize() {
+{%raw%}public void finalize() {
     // do something
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2029,12 +2200,12 @@ Avoid idempotent operations - they have no effect.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
  public void bar() {
   int x = 2;
   x = x;
  }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2055,12 +2226,12 @@ There is no need to import a type that lives in the same package.
 **Example(s):**
 
 ``` java
-package foo;
+{%raw%}package foo;
 
 import foo.Buz;     // no need for this
 import foo.*;       // or this
 
-public class Bar{}
+public class Bar{}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2089,11 +2260,11 @@ Avoid instantiating an object just to call getClass() on it; use the .class publ
 **Example(s):**
 
 ``` java
-// replace this
+{%raw%}// replace this
 Class c = new String().getClass();
 
 // with this:
-Class c = String.class;
+Class c = String.class;{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2114,9 +2285,9 @@ Check for messages in slf4j loggers with non matching number of arguments and pl
 **Example(s):**
 
 ``` java
-LOGGER.error("forget the arg {}");
+{%raw%}LOGGER.error("forget the arg {}");
 LOGGER.error("too many args {}", "arg1", "arg2");
-LOGGER.error("param {}", "arg1", new IllegalStateException("arg")); //The exception is shown separately, so is correct.
+LOGGER.error("param {}", "arg1", new IllegalStateException("arg")); //The exception is shown separately, so is correct.{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2145,7 +2316,7 @@ Avoid jumbled loop incrementers - its usually a mistake, and is confusing even i
 **Example(s):**
 
 ``` java
-public class JumbledIncrementerRule1 {
+{%raw%}public class JumbledIncrementerRule1 {
     public void foo() {
         for (int i = 0; i < 10; i++) {          // only references 'i'
             for (int k = 0; k < 20; i++) {      // references both 'i' and 'k'
@@ -2153,7 +2324,7 @@ public class JumbledIncrementerRule1 {
             }
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2189,12 +2360,12 @@ Some JUnit framework methods are easy to misspell.
 **Example(s):**
 
 ``` java
-import junit.framework.*;
+{%raw%}import junit.framework.*;
 
 public class Foo extends TestCase {
     public void setup() {}    // oops, should be setUp
     public void TearDown() {} // oops, should be tearDown
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2228,12 +2399,12 @@ The suite() method in a JUnit test needs to be both public and static.
 **Example(s):**
 
 ``` java
-import junit.framework.*;
+{%raw%}import junit.framework.*;
 
 public class Foo extends TestCase {
     public void suite() {}         // oops, should be static
     private static void suite() {} // oops, should be public
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2243,11 +2414,16 @@ public class Foo extends TestCase {
 
 ## LoggerIsNotStaticFinal
 
+<span style="border-radius: 0.25em; color: #fff; padding: 0.2em 0.6em 0.3em; display: inline; background-color: #d9534f;">Deprecated</span> 
+
 **Since:** PMD 2.0
 
 **Priority:** Medium High (2)
 
 In most cases, the Logger reference can be declared as static and final.
+
+This rule is deprecated and will be removed with PMD 7.0.0.
+The rule is replaced by {% rule java/errorprone/ProperLogger %}.
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
@@ -2262,11 +2438,11 @@ In most cases, the Logger reference can be declared as static and final.
 **Example(s):**
 
 ``` java
-public class Foo{
+{%raw%}public class Foo{
     Logger log = Logger.getLogger(Foo.class.getName());                 // not recommended
 
     static final Logger log = Logger.getLogger(Foo.class.getName());    // preferred approach
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2287,12 +2463,12 @@ Non-constructor methods should not have the same name as the enclosing class.
 **Example(s):**
 
 ``` java
-public class MyClass {
+{%raw%}public class MyClass {
 
     public MyClass() {}         // this is OK because it is a constructor
 
     public void MyClass() {}    // this is bad because it is a method
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2307,7 +2483,7 @@ public class MyClass {
 **Priority:** Medium (3)
 
 The null check here is misplaced. If the variable is null a NullPointerException will be thrown.
-Either the check is useless (the variable will never be "null") or it is incorrect.
+Either the check is useless (the variable will never be &quot;null&quot;) or it is incorrect.
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
@@ -2333,19 +2509,19 @@ Either the check is useless (the variable will never be "null") or it is incorre
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     void bar() {
         if (a.equals(baz) && a != null) {}
         }
-}
+}{%endraw%}
 ```
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     void bar() {
         if (a.equals(baz) || a == null) {}
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2378,7 +2554,7 @@ may indicate problematic behaviour. Empty cases are ignored as these indicate an
 **Example(s):**
 
 ``` java
-public void bar(int status) {
+{%raw%}public void bar(int status) {
     switch(status) {
       case CANCELLED:
         doCancelled();
@@ -2394,7 +2570,7 @@ public void bar(int status) {
         doErrorHandling();
         break;
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2424,11 +2600,11 @@ chain needs an own serialVersionUID field. See also [Should an abstract class ha
 **Example(s):**
 
 ``` java
-public class Foo implements java.io.Serializable {
+{%raw%}public class Foo implements java.io.Serializable {
     String name;
     // Define serialization id to avoid serialization related bugs
     // i.e., public static final long serialVersionUID = 4328743;
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2444,28 +2620,39 @@ public class Foo implements java.io.Serializable {
 
 A class that has private constructors and does not have any static methods or fields cannot be used.
 
+When one of the private constructors is annotated with one of the annotations, then the class is not considered
+non-instantiatable anymore and no violation will be reported.
+See the property `annotations`.
+
 **This rule is defined by the following XPath expression:**
 ``` xpath
-//ClassOrInterfaceDeclaration[@Nested='false']
+//ClassOrInterfaceDeclaration[@Nested=false()]
 [
   (
+    (: at least one constructor :)
     ./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration
     and
-    count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration) = count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration[@Private='true'])
+    (: only private constructors :)
+    count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration) = count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration[@Private=true()])
+    and
+    (: all constructors must not be annotated :)
+    (every $x in $annotations satisfies
+      not(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration/
+            ../Annotation/MarkerAnnotation/Name[pmd-java:typeIs($x)]))
   )
   and
-  not(.//MethodDeclaration[@Static='true'])
+  not(.//MethodDeclaration[@Static=true()])
   and
-  not(.//FieldDeclaration[@Private='false'][@Static='true'])
+  not(.//FieldDeclaration[@Private=false()][@Static=true()])
   and
-  not(.//ClassOrInterfaceDeclaration[@Nested='true']
-           [@Public='true']
-           [@Static='true']
-           [not(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration) or ./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration[@Public='true']]
+  not(.//ClassOrInterfaceDeclaration[@Nested=true()]
+           [@Public=true()]
+           [@Static=true()]
+           [not(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration) or ./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration[@Public=true()]]
            [./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/MethodDeclaration
-                [@Public='true']
+                [@Public=true()]
                 [./ResultType/Type/ReferenceType/ClassOrInterfaceType
-                    [@Image = //ClassOrInterfaceDeclaration[@Nested='false']/@Image]
+                    [@Image = //ClassOrInterfaceDeclaration[@Nested=false()]/@Image]
                 ]
             ]
         )
@@ -2475,19 +2662,34 @@ A class that has private constructors and does not have any static methods or fi
 **Example(s):**
 
 ``` java
-// This class is unusable, since it cannot be
+{%raw%}// This class is unusable, since it cannot be
 // instantiated (private constructor),
 // and no static method can be called.
 
 public class Foo {
   private Foo() {}
   void foo() {}
-}
+}{%endraw%}
 ```
 
-**Use this rule by referencing it:**
+**This rule has the following properties:**
+
+|Name|Default Value|Description|Multivalued|
+|----|-------------|-----------|-----------|
+|annotations|org.springframework.beans.factory.annotation.Autowired ,  javax.inject.Inject|If a constructor is annotated with one of these annotations, then the class is ignored.|yes. Delimiter is ','.|
+
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/MissingStaticMethodInNonInstantiatableClass" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/MissingStaticMethodInNonInstantiatableClass">
+    <properties>
+        <property name="annotations" value="org.springframework.beans.factory.annotation.Autowired, javax.inject.Inject" />
+    </properties>
+</rule>
 ```
 
 ## MoreThanOneLogger
@@ -2503,12 +2705,12 @@ Normally only one logger is used in each class.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     Logger log = Logger.getLogger(Foo.class.getName());
     // It is very rare to see two loggers on a class, normally
     // log information is multiplexed by levels
     Logger log2= Logger.getLogger(Foo.class.getName());
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2533,7 +2735,7 @@ This legal, but confusing. It is easy to mix up the case labels and the non-case
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
   void bar(int a) {
    switch (a) {
      case 1:
@@ -2545,7 +2747,7 @@ public class Foo {
        break;
     }
   }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2565,18 +2767,18 @@ confusing.
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
-//Initializer[@Static='false']
+//Initializer[@Static=false()][not(ancestor::*[3][self::AllocationExpression or self::EnumConstant])]
 ```
 
 **Example(s):**
 
 ``` java
-public class MyClass {
+{%raw%}public class MyClass {
   // this block gets run before any call to a constructor
   {
     System.out.println("I am about to construct myself");
   }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2590,7 +2792,7 @@ public class MyClass {
 
 **Priority:** Medium (3)
 
-Assigning a "null" to a variable (outside of its declaration) is usually bad form.  Sometimes, this type
+Assigning a &quot;null&quot; to a variable (outside of its declaration) is usually bad form.  Sometimes, this type
 of assignment is an indication that the programmer doesn't completely understand what is going on in the code.
 
 NOTE: This sort of assignment may used in some cases to dereference objects and encourage garbage collection.
@@ -2600,13 +2802,13 @@ NOTE: This sort of assignment may used in some cases to dereference objects and 
 **Example(s):**
 
 ``` java
-public void bar() {
+{%raw%}public void bar() {
   Object x = null; // this is OK
   x = new Object();
      // big, complex piece of code here
   x = null; // this is not required
      // big, complex piece of code here
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2627,7 +2829,7 @@ Override both public boolean Object.equals(Object other), and public int Object.
 **Example(s):**
 
 ``` java
-public class Bar {        // poor, missing a hashcode() method
+{%raw%}public class Bar {        // poor, missing a hashcode() method
     public boolean equals(Object o) {
       // do some comparison
     }
@@ -2646,7 +2848,7 @@ public class Foo {        // perfect, both methods provided
     public int hashCode() {
       // return some hash value
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2678,11 +2880,11 @@ ClassOrInterfaceDeclaration[1]/@Image)
 **Example(s):**
 
 ``` java
-class Foo{
+{%raw%}class Foo{
     public Object clone(){
         return new Foo(); // This is bad
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2697,32 +2899,47 @@ class Foo{
 **Priority:** Medium (3)
 
 A logger should normally be defined private static final and be associated with the correct class.
-Private final Log log; is also allowed for rare cases where loggers need to be passed around,
+`private final Log log;` is also allowed for rare cases where loggers need to be passed around,
 with the restriction that the logger needs to be passed into the constructor.
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
-//ClassOrInterfaceBodyDeclaration[FieldDeclaration//ClassOrInterfaceType[@Image='Log']
- and
- not(FieldDeclaration[@Final='true'][@Static='true'][@Private='true'][.//VariableDeclaratorId[@Image=$staticLoggerName]]
- and
- //ArgumentList//ClassOrInterfaceType[@Image = ancestor::ClassOrInterfaceDeclaration/@Image or @Image = ancestor::EnumDeclaration/@Image])
- and
- not(FieldDeclaration[@Final='true'][@Private='true'][.//VariableDeclaratorId[@Image='log']]
- [count(.//VariableInitializer)=0]
- [ancestor::ClassOrInterfaceBody//StatementExpression[.//PrimaryExpression/descendant::*[@Image='log']][count(.//AllocationExpression)=0]]
- )]
+//FieldDeclaration
+[.//ClassOrInterfaceType[pmd-java:typeIs($loggerClass)]]
+[
+    (: check modifiers :)
+    (@Private = false() or @Final = false())
+    (: check logger name :)
+    or (@Static and .//VariableDeclaratorId[@Image != $staticLoggerName])
+    or (@Static = false() and .//VariableDeclaratorId[@Image != $loggerName])
+
+    (: check logger argument type matches class or enum name :)
+    or .//ArgumentList//ClassOrInterfaceType[@Image != ancestor::ClassOrInterfaceDeclaration/@Image]
+    or .//ArgumentList//ClassOrInterfaceType[@Image != ancestor::EnumDeclaration/@Image]
+]
+[not(
+     (: special case - final logger initialized inside constructor :)
+     count(.//VariableInitializer)=0
+     and @Static = false()
+     and
+     ancestor::ClassOrInterfaceBody//ConstructorDeclaration//StatementExpression
+        [PrimaryExpression[PrimaryPrefix[@ThisModifier]]/PrimarySuffix[@Image=$loggerName]]
+        [AssignmentOperator[@Image = '=']]
+        [Expression/PrimaryExpression/PrimaryPrefix/Name[@Image = ancestor::ConstructorDeclaration//FormalParameter/VariableDeclaratorId/@Image]]
+        [count(.//AllocationExpression)=0]
+  )
+]
 ```
 
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
 
     private static final Log LOG = LogFactory.getLog(Foo.class);    // proper way
 
     protected Log LOG = LogFactory.getLog(Testclass.class);         // wrong approach
-}
+}{%endraw%}
 ```
 
 **This rule has the following properties:**
@@ -2730,10 +2947,23 @@ public class Foo {
 |Name|Default Value|Description|Multivalued|
 |----|-------------|-----------|-----------|
 |staticLoggerName|LOG|Name of the static Logger variable|no|
+|loggerName|log|Name of the Logger instance variable|no|
+|loggerClass|Log|Class name of the logger|no|
 
-**Use this rule by referencing it:**
+**Use this rule with the default properties by just referencing it:**
 ``` xml
 <rule ref="category/java/errorprone.xml/ProperLogger" />
+```
+
+**Use this rule and customize it:**
+``` xml
+<rule ref="category/java/errorprone.xml/ProperLogger">
+    <properties>
+        <property name="staticLoggerName" value="LOG" />
+        <property name="loggerName" value="log" />
+        <property name="loggerClass" value="Log" />
+    </properties>
+</rule>
 ```
 
 ## ReturnEmptyArrayRatherThanNull
@@ -2750,7 +2980,7 @@ NullPointerExceptions.
 ``` xpath
 //MethodDeclaration
 [
-(./ResultType/Type[@Array='true'])
+(./ResultType/Type[@ArrayType='true'])
 and
 (./Block/BlockStatement/Statement/ReturnStatement/Expression/PrimaryExpression/PrimaryPrefix/Literal/NullLiteral)
 ]
@@ -2759,7 +2989,7 @@ and
 **Example(s):**
 
 ``` java
-public class Example {
+{%raw%}public class Example {
     // Not a good idea...
     public int[] badBehavior() {
         // ...
@@ -2771,7 +3001,7 @@ public class Example {
         //...
         return new String[0];
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2789,13 +3019,13 @@ Avoid returning from a finally block, this can discard exceptions.
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
-//FinallyStatement//ReturnStatement
+//FinallyStatement//ReturnStatement except //FinallyStatement//(MethodDeclaration|LambdaExpression)//ReturnStatement
 ```
 
 **Example(s):**
 
 ``` java
-public class Bar {
+{%raw%}public class Bar {
     public String foo() {
         try {
             throw new Exception( "My Exception" );
@@ -2805,7 +3035,7 @@ public class Bar {
             return "A. O. K."; // return not recommended here
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2832,10 +3062,10 @@ formatting is used.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
   // Should specify Locale.US (or whatever)
   private SimpleDateFormat sdf = new SimpleDateFormat("pattern");
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2858,7 +3088,7 @@ for each call and new objects will be created for every invocation.
 **Example(s):**
 
 ``` java
-public class Singleton {
+{%raw%}public class Singleton {
 
     private static Singleton singleton = new Singleton( );
 
@@ -2872,7 +3102,7 @@ public class Singleton {
         Singleton singleton = (Singleton) obj;
         return singleton;           //violation
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2895,14 +3125,14 @@ for each call and new objects will be created for every invocation.
 **Example(s):**
 
 ``` java
-class Singleton {
+{%raw%}class Singleton {
     private static Singleton instance = null;
     public static Singleton getInstance() {
         synchronized(Singleton.class) {
             return new Singleton();
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2946,12 +3176,12 @@ behavior especially when instances are distributed by the container on several J
 **Example(s):**
 
 ``` java
-public class SomeEJB extends EJBObject implements EJBLocalHome {
+{%raw%}public class SomeEJB extends EJBObject implements EJBLocalHome {
 
     private static int CountA;          // poor, field can be edited
 
     private static final int CountB;    // preferred, read-only access
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -2996,14 +3226,14 @@ Literal
 **Example(s):**
 
 ``` java
-// misleading instantiation, these buffers
+{%raw%}// misleading instantiation, these buffers
 // are actually sized to 99 characters long
 StringBuffer  sb1 = new StringBuffer('c');
 StringBuilder sb2 = new StringBuilder('c');
 
 // in these forms, just single characters are allocated
 StringBuffer  sb3 = new StringBuffer("c");
-StringBuilder sb4 = new StringBuilder("c");
+StringBuilder sb4 = new StringBuilder("c");{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3046,7 +3276,7 @@ intention to override the equals(Object) method.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
    public int equals(Object o) {
      // oops, this probably was supposed to be boolean equals
    }
@@ -3056,7 +3286,7 @@ public class Foo {
    public boolean equals(Object o1, Object o2) {
      // oops, this probably was supposed to be equals(Object)
    }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3078,10 +3308,10 @@ to override the hashCode() method.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     public int hashcode() { // oops, this probably was supposed to be 'hashCode'
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3103,18 +3333,18 @@ followed by:
     OctalDigit | OctalDigit OctalDigit | ZeroToThree OctalDigit OctalDigit
 
 Any octal escape sequence followed by non-octal digits can be confusing,
-e.g. "\038" is interpreted as the octal escape sequence "\03" followed by
-the literal character "8".
+e.g. &quot;\038&quot; is interpreted as the octal escape sequence &quot;\03&quot; followed by
+the literal character &quot;8&quot;.
 
 **This rule is defined by the following Java class:** [net.sourceforge.pmd.lang.java.rule.errorprone.SuspiciousOctalEscapeRule](https://github.com/pmd/pmd/blob/master/pmd-java/src/main/java/net/sourceforge/pmd/lang/java/rule/errorprone/SuspiciousOctalEscapeRule.java)
 
 **Example(s):**
 
 ``` java
-public void foo() {
+{%raw%}public void foo() {
   // interpreted as octal 12, followed by character '8'
   System.out.println("suspicious: \128");
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3136,14 +3366,14 @@ since most people will assume it is a test case. Test classes have test methods 
 **Example(s):**
 
 ``` java
-//Consider changing the name of the class if it is not a test
+{%raw%}//Consider changing the name of the class if it is not a test
 //Consider adding test methods if it is a test
 public class CarTest {
    public static void main(String[] args) {
     // do something
    }
    // code
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3157,7 +3387,7 @@ public class CarTest {
 
 **Priority:** Medium (3)
 
-Do not use "if" statements whose conditionals are always true or always false.
+Do not use &quot;if&quot; statements whose conditionals are always true or always false.
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
@@ -3169,13 +3399,13 @@ Do not use "if" statements whose conditionals are always true or always false.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     public void close() {
         if (true) {        // fixed conditional, not recommended
             // ...
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3219,11 +3449,11 @@ UnaryExpressionNotPlusMinus[@Image='!']
 **Example(s):**
 
 ``` java
-public class SimpleTest extends TestCase {
+{%raw%}public class SimpleTest extends TestCase {
     public void testX() {
         assertTrue(true);       // serves no real purpose
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3244,9 +3474,9 @@ Using equalsIgnoreCase() is faster than using toUpperCase/toLowerCase().equals()
 **Example(s):**
 
 ``` java
-boolean answer1 = buz.toUpperCase().equals("baz");              // should be buz.equalsIgnoreCase("baz")
+{%raw%}boolean answer1 = buz.toUpperCase().equals("baz");              // should be buz.equalsIgnoreCase("baz")
 
-boolean answer2 = buz.toUpperCase().equalsIgnoreCase("baz");    // another unnecessary toUpperCase()
+boolean answer2 = buz.toUpperCase().equalsIgnoreCase("baz");    // another unnecessary toUpperCase(){%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3268,11 +3498,11 @@ on the wrapper classes instead.
 **Example(s):**
 
 ``` java
-public String convert(int x) {
+{%raw%}public String convert(int x) {
     String foo = new Integer(x).toString(); // this wastes an object
 
     return Integer.toString(x);             // preferred approach
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3302,7 +3532,7 @@ After checking an object reference for null, you should invoke equals() on that 
 **Example(s):**
 
 ``` java
-public class Test {
+{%raw%}public class Test {
 
     public String method1() { return "ok";}
     public String method2() { return null;}
@@ -3336,7 +3566,7 @@ public class Test {
             }
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3366,7 +3596,7 @@ concat(ancestor::ClassOrInterfaceDeclaration/ClassOrInterfaceBody/ClassOrInterfa
 **Example(s):**
 
 ``` java
-public class Main {
+{%raw%}public class Main {
     private static final Log _LOG = LogFactory.getLog( Main.class );
     void bar() {
         try {
@@ -3376,7 +3606,7 @@ public class Main {
             _LOG.error( oe.getMessage(), oe ); //Correct
         }
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3405,11 +3635,11 @@ and count(PrimarySuffix) = 0)]
 **Example(s):**
 
 ``` java
-public boolean test(String s) {
+{%raw%}public boolean test(String s) {
     if (s == "one") return true;        // unreliable
     if ("two".equals(s)) return true;   // better
     return false;
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3431,7 +3661,7 @@ since the result of the operation is a new object. Therefore, ignoring the opera
 **Example(s):**
 
 ``` java
-import java.math.*;
+{%raw%}import java.math.*;
 
 class Test {
     void method1() {
@@ -3442,7 +3672,7 @@ class Test {
         BigDecimal bd=new BigDecimal(10);
         bd = bd.add(new BigDecimal(5)); // this won't trigger the rule
     }
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3456,8 +3686,19 @@ class Test {
 
 **Priority:** Medium (3)
 
-When doing String.toLowerCase()/toUpperCase() conversions, use Locales to avoids problems with languages that
-have unusual conventions, i.e. Turkish.
+When doing `String::toLowerCase()/toUpperCase()` conversions, use an explicit locale argument to specify the case transformation rules.
+
+Using `String::toLowerCase()` without arguments implicitly uses `Locale::getDefault()`.
+The problem is that the default locale depends on the current JVM setup (and usually on the system in which it is running).
+Using the system default may be exactly what you want (e.g. if you are manipulating strings you got through standard input),
+but it may as well not be the case (e.g. if you are getting the string over the network or a file, and the encoding is well-defined
+and independent of the environment). In the latter case, using the default locale makes the case transformation brittle, as
+it may yield unexpected results on a machine whose locale has other case translation rules. For example, in Turkish, the
+uppercase form of `i` is `İ` (U+0130, not ASCII) and not `I` (U+0049) as in English.
+
+The rule is intended to *force* developers to think about locales when dealing with strings. By taking a conscious decision about
+the choice of locale at the time of writing, you reduce the risk of surprising behaviour down the line, and communicate your intent
+to future readers.
 
 **This rule is defined by the following XPath expression:**
 ``` xpath
@@ -3479,20 +3720,20 @@ PrimarySuffix
 **Example(s):**
 
 ``` java
-class Foo {
-    // BAD
-    if (x.toLowerCase().equals("list")) { }
+{%raw%}// violation - implicitly system-dependent conversion
+if (x.toLowerCase().equals("list")) {}
 
-    /*
-     * This will not match "LIST" when in Turkish locale
-     * The above could be
-     * if (x.toLowerCase(Locale.US).equals("list")) { }
-     * or simply
-     * if (x.equalsIgnoreCase("list")) { }
-     */
-    // GOOD
-    String z = a.toLowerCase(Locale.EN);
-}
+// The above will not match "LIST" on a system with a Turkish locale.
+// It could be replaced with
+if (x.toLowerCase(Locale.US).equals("list")) { }
+// or simply
+if (x.equalsIgnoreCase("list")) { }
+
+// ok - system independent conversion
+String z = a.toLowerCase(Locale.ROOT);
+
+// ok - explicit system-dependent conversion
+String z2 = a.toLowerCase(Locale.getDefault());{%endraw%}
 ```
 
 **Use this rule by referencing it:**
@@ -3517,9 +3758,9 @@ Thread.currentThread().getContextClassLoader() instead.
 **Example(s):**
 
 ``` java
-public class Foo {
+{%raw%}public class Foo {
     ClassLoader cl = Bar.class.getClassLoader();
-}
+}{%endraw%}
 ```
 
 **Use this rule by referencing it:**
