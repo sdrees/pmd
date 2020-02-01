@@ -38,10 +38,12 @@ import apex.jorje.semantic.ast.statement.VariableDeclaration;
 
 /**
  * Helper methods
- * 
+ *
  * @author sergey.gorbaty
  *
+ * @deprecated Use {@link net.sourceforge.pmd.lang.apex.rule.internal.Helper} instead.
  */
+@Deprecated
 public final class Helper {
     static final String ANY_METHOD = "*";
 
@@ -70,9 +72,9 @@ public final class Helper {
 
     /**
      * Finds DML operations in a given node descendants' path
-     * 
+     *
      * @param node
-     * 
+     *
      * @return true if found DML operations in node descendants
      */
     static boolean foundAnyDML(final ApexNode<?> node) {
@@ -164,7 +166,7 @@ public final class Helper {
                 .append(n.getFieldInfo().getName());
         return sb.toString();
     }
-    
+
     static String getFQVariableName(final ASTFieldDeclaration variable) {
         StringBuilder sb = new StringBuilder()
                 .append(variable.getNode().getDefiningType().getApexName()).append(":")

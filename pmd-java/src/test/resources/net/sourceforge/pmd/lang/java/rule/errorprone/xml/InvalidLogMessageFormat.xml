@@ -745,4 +745,69 @@ public final class Main {
             }
         ]]></code>
     </test-code>
+
+    <test-code>
+        <description>log4j2: #2196 [java] InvalidLogMessageFormat does not detect extra parameters when no placeholders</description>
+        <expected-problems>2</expected-problems>
+        <expected-linenumbers>8,9</expected-linenumbers>
+        <code><![CDATA[
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+public class InvalidLogMessageFormatTest {
+    private static final Logger logger = LogManager.getLogger("MyLogger");
+
+    public static void main(String[] args) {
+        logger.warn("foo {}", "flibble", "moo", "blah", "blah"); // PMD flags this
+        logger.warn("foo", "flibble", "moo", "blah", "blah"); // PMD doesn't flag this
+    }
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>slf4j: #2196 [java] InvalidLogMessageFormat does not detect extra parameters when no placeholders</description>
+        <expected-problems>2</expected-problems>
+        <expected-linenumbers>8,9</expected-linenumbers>
+        <code><![CDATA[
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class InvalidLogMessageFormatTest {
+    private static final Logger logger = LoggerFactory.getLogger("MyLogger");
+
+    public static void main(String[] args) {
+        logger.warn("foo {}", "flibble", "moo", "blah", "blah"); // PMD flags this
+        logger.warn("foo", "flibble", "moo", "blah", "blah"); // PMD doesn't flag this
+    }
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>ignore slf4j-Markers when detecting the number of arguments</description>
+        <expected-problems>2</expected-problems>
+        <expected-linenumbers>11,17</expected-linenumbers>
+        <code><![CDATA[
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.helpers.BasicMarkerFactory;
+
+public class InvalidLogMessageFormatTest {
+    private static final Logger logger = LoggerFactory.getLogger("MyLogger");
+    private static final Marker marker = BasicMarkerFactory.getMarker("MARKER");
+
+    public static void main(String[] args) {
+        logger.warn(marker, "foo {}", "flibble", "moo", "blah", "blah"); // wrong number of arguments
+        logger.warn(marker, "foo"); // correct: marker and no arguments
+        logger.warn(marker, "foo", new Exception()); // correct: marker and one exception parameter
+        logger.warn(marker, "foo {}", "bar"); // correct: marker and one argument
+
+        final var otherMarker = MarkerFactory.getMarker("OTHER_MARKER");
+        logger.warn(otherMarker, "foo"); // gets flagged as we can't statically determine the type of the "otherMarker" variable
+    }
+}
+        ]]></code>
+    </test-code>
 </test-data>

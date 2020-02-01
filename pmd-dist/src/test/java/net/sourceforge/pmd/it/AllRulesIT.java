@@ -22,7 +22,8 @@ public class AllRulesIT extends AbstractBinaryDistributionTest {
     @Parameters
     public static Iterable<String> languagesToTest() {
         // note: scala and wsdl have no rules
-        return Arrays.asList("java", "apex", "javascript", "jsp", "plsql", "pom", "visualforce", "velocitytemplate", "xml", "xsl");
+        return Arrays.asList("java", "apex", "javascript", "jsp", "modelica",
+                "plsql", "pom", "visualforce", "velocitytemplate", "xml", "xsl");
     }
 
     @Test
@@ -40,7 +41,11 @@ public class AllRulesIT extends AbstractBinaryDistributionTest {
         result.assertNoError("Exception applying rule");
         result.assertNoError("Ruleset not found");
         result.assertNoError("Use of deprecated attribute");
+        result.assertNoError("instead of the deprecated"); // rule deprecations
         result.assertNoErrorInReport("Error while processing");
         result.assertNoErrorInReport("Error while parsing");
+
+        // See bug #2092: [apex] ApexLexer logs visible when Apex is the selected language upon starting the designer
+        result.assertNoError("Deduped array ApexLexer");
     }
 }

@@ -21,9 +21,9 @@ import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
-import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.RulesetsFactoryUtils;
 import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.Parser;
@@ -122,7 +122,7 @@ public class XPathRuleTest extends RuleTst {
     /**
      * Test for problem reported in bug #1219 PrimarySuffix/@Image does not work
      * in some cases in xpath 2.0
-     * 
+     *
      * @throws Exception
      *             any error
      */
@@ -167,7 +167,7 @@ public class XPathRuleTest extends RuleTst {
 
     /**
      * Following sibling check: See https://sourceforge.net/p/pmd/bugs/1209/
-     * 
+     *
      * @throws Exception
      *             any error
      */
@@ -211,7 +211,7 @@ public class XPathRuleTest extends RuleTst {
         Report report = new Report();
         ctx.setReport(report);
         ctx.setSourceCodeFile(new File("n/a"));
-        RuleSet rules = new RuleSetFactory().createSingleRuleRuleSet(r);
+        RuleSet rules = RulesetsFactoryUtils.defaultFactory().createSingleRuleRuleSet(r);
         p.getSourceCodeProcessor().processSourceCode(new StringReader(test), new RuleSets(rules), ctx);
         return report;
     }

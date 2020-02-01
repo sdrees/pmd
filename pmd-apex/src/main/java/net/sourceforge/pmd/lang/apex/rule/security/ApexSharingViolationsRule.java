@@ -12,10 +12,11 @@ import net.sourceforge.pmd.lang.apex.ast.ASTModifierNode;
 import net.sourceforge.pmd.lang.apex.ast.ASTUserClass;
 import net.sourceforge.pmd.lang.apex.ast.ApexNode;
 import net.sourceforge.pmd.lang.apex.rule.AbstractApexRule;
+import net.sourceforge.pmd.lang.apex.rule.internal.Helper;
 
 /**
  * Finds Apex class that do not define sharing
- * 
+ *
  * @author sergey.gorbaty
  */
 public class ApexSharingViolationsRule extends AbstractApexRule {
@@ -48,7 +49,7 @@ public class ApexSharingViolationsRule extends AbstractApexRule {
     /**
      * Check if class contains any Database.query / Database.insert [ Database.*
      * ] methods
-     * 
+     *
      * @param node
      * @param data
      */
@@ -78,7 +79,7 @@ public class ApexSharingViolationsRule extends AbstractApexRule {
 
     /**
      * Check if class has no sharing declared
-     * 
+     *
      * @param node
      * @param data
      */
@@ -91,7 +92,7 @@ public class ApexSharingViolationsRule extends AbstractApexRule {
 
     /**
      * Does class have sharing keyword declared?
-     * 
+     *
      * @param node
      * @return
      */
