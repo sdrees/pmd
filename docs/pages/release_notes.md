@@ -24,6 +24,12 @@ For the changes, see [PMD Designer Changelog](https://github.com/pmd/pmd-designe
 In addition to suppressing violation with the `@SuppressWarnings` annotation, Apex now also supports
 the suppressions with a `NOPMD` comment. See [Suppressing warnings](pmd_userdocs_suppressing_warnings.html).
 
+#### Improved CPD support for C#
+
+The C# tokenizer is now based on an antlr grammar instead of a manual written tokenizer. This
+should give more accurate results and especially fixes the problems with the using statement syntax
+(see [#2139](https://github.com/pmd/pmd/issues/2139)).
+
 #### New Rules
 
 *   The Rule {% rule "apex/design/CognitiveComplexity" %} (`apex-design`) finds methods and classes
@@ -35,15 +41,21 @@ the suppressions with a `NOPMD` comment. See [Suppressing warnings](pmd_userdocs
 
 *   apex
     *   [#1087](https://github.com/pmd/pmd/issues/1087): \[apex] Support suppression via //NOPMD
+    *   [#2306](https://github.com/pmd/pmd/issues/2306): \[apex] Switch statements are not parsed/supported
 *   apex-design
     *   [#2162](https://github.com/pmd/pmd/issues/2162): \[apex] Cognitive Complexity rule
+*   cs
+    *   [#2139](https://github.com/pmd/pmd/issues/2139): \[cs] CPD doesn't understand alternate using statement syntax with C# 8.0
 *   doc
     *   [#2274](https://github.com/pmd/pmd/issues/2274): \[doc] Java API documentation for PMD
 *   java
     *   [#2268](https://github.com/pmd/pmd/issues/2268): \[java] Improve TypeHelper resilience
 *   java-bestpractices
     *   [#2277](https://github.com/pmd/pmd/issues/2277): \[java] FP in UnusedImports for ambiguous static on-demand imports
+*   java-design
+    *   [#911](https://github.com/pmd/pmd/issues/911): \[java] UselessOverridingMethod false positive when elevating access modifier
 *   java-errorprone
+    *   [#2242](https://github.com/pmd/pmd/issues/2242): \[java] False-positive MisplacedNullCheck reported
     *   [#2250](https://github.com/pmd/pmd/issues/2250): \[java] InvalidLogMessageFormat flags logging calls using a slf4j-Marker
     *   [#2255](https://github.com/pmd/pmd/issues/2255): \[java] InvalidLogMessageFormat false-positive for a lambda argument
 *   java-performance
@@ -134,6 +146,7 @@ methods on {% jdoc apex::lang.apex.ast.ApexParserVisitor %} and its implementati
 *   [#2276](https://github.com/pmd/pmd/pull/2276): \[java] AppendCharacterWithCharRule ignore literals in expressions - [Kris Scheibe](https://github.com/kris-scheibe)
 *   [#2278](https://github.com/pmd/pmd/pull/2278): \[java] fix UnusedImports rule for ambiguous static on-demand imports - [Kris Scheibe](https://github.com/kris-scheibe)
 *   [#2279](https://github.com/pmd/pmd/pull/2279): \[apex] Add support for suppressing violations using the // NOPMD comment - [Gwilym Kuiper](https://github.com/gwilymatgearset)
+*   [#2280](https://github.com/pmd/pmd/pull/2280): \[cs] CPD: Replace C# tokenizer by an Antlr-based one - [Maikel Steneker](https://github.com/maikelsteneker)
 *   [#2297](https://github.com/pmd/pmd/pull/2297): \[apex] Cognitive complexity metrics - [Gwilym Kuiper](https://github.com/gwilymatgearset)
 
 {% endtocmaker %}
