@@ -14,6 +14,29 @@ This is a {{ site.pmd.release_type }} release.
 
 ### New and noteworthy
 
+#### Java 14 Support
+
+This release of PMD brings support for Java 14. PMD can parse [Switch Expressions](https://openjdk.java.net/jeps/361),
+which have been promoted to be a standard language feature of Java.
+
+PMD also parses [Text Blocks](https://openjdk.java.net/jeps/368) as String literals, which is still a preview
+language feature in Java 14.
+
+The new [Pattern Matching for instanceof](https://openjdk.java.net/jeps/305) can be used as well as
+[Records](https://openjdk.java.net/jeps/359).
+
+Note: The Text Blocks, Pattern Matching for instanceof and Records are all preview language features of OpenJDK 14
+and are not enabled by default. In order to
+analyze a project with PMD that uses these language features, you'll need to enable it via the environment
+variable `PMD_JAVA_OPTS` and select the new language version `14-preview`:
+
+    export PMD_JAVA_OPTS=--enable-preview
+    ./run.sh pmd -language java -version 14-preview ...
+
+Note: Support for the extended break statement introduced in Java 12 as a preview language feature
+has been removed from PMD with this version. The version "12-preview" is no longer available.
+
+
 #### Updated PMD Designer
 
 This PMD release ships a new version of the pmd-designer.
@@ -37,6 +60,11 @@ should give more accurate results and especially fixes the problems with the usi
     to cyclomatic complexity, this rule uses "Cognitive Complexity", which is a measure of how
     difficult it is for humans to read and understand a method.
 
+*   The Rule {% rule "apex/errorprone/TestMethodsMustBeInTestClasses" %} (`apex-errorprone`) finds test methods
+    that are not residing in a test class. The test methods should be moved to a proper test class.
+    Support for tests inside functional classes was removed in Spring-13 (API Version 27.0), making classes
+    that violate this rule fail compile-time. This rule is however useful when dealing with legacy code.
+
 ### Fixed Issues
 
 *   apex
@@ -44,11 +72,14 @@ should give more accurate results and especially fixes the problems with the usi
     *   [#2306](https://github.com/pmd/pmd/issues/2306): \[apex] Switch statements are not parsed/supported
 *   apex-design
     *   [#2162](https://github.com/pmd/pmd/issues/2162): \[apex] Cognitive Complexity rule
+*   apex-errorprone
+    *   [#639](https://github.com/pmd/pmd/issues/639): \[apex] Test methods should not be in classes other than test classes
 *   cs
     *   [#2139](https://github.com/pmd/pmd/issues/2139): \[cs] CPD doesn't understand alternate using statement syntax with C# 8.0
 *   doc
     *   [#2274](https://github.com/pmd/pmd/issues/2274): \[doc] Java API documentation for PMD
 *   java
+    *   [#2159](https://github.com/pmd/pmd/issues/2159): \[java] Prepare for JDK 14
     *   [#2268](https://github.com/pmd/pmd/issues/2268): \[java] Improve TypeHelper resilience
 *   java-bestpractices
     *   [#2277](https://github.com/pmd/pmd/issues/2277): \[java] FP in UnusedImports for ambiguous static on-demand imports
@@ -148,6 +179,8 @@ methods on {% jdoc apex::lang.apex.ast.ApexParserVisitor %} and its implementati
 *   [#2279](https://github.com/pmd/pmd/pull/2279): \[apex] Add support for suppressing violations using the // NOPMD comment - [Gwilym Kuiper](https://github.com/gwilymatgearset)
 *   [#2280](https://github.com/pmd/pmd/pull/2280): \[cs] CPD: Replace C# tokenizer by an Antlr-based one - [Maikel Steneker](https://github.com/maikelsteneker)
 *   [#2297](https://github.com/pmd/pmd/pull/2297): \[apex] Cognitive complexity metrics - [Gwilym Kuiper](https://github.com/gwilymatgearset)
+*   [#2317](https://github.com/pmd/pmd/pull/2317): \[apex] New Rule - Test Methods Must Be In Test Classes - [Brian Nørremark](https://github.com/noerremark)
+*   [#2321](https://github.com/pmd/pmd/pull/2321): \[apex] Support switch statements correctly in Cognitive Complexity - [Gwilym Kuiper](https://github.com/gwilymatgearset)
 
 {% endtocmaker %}
 
