@@ -73,6 +73,23 @@ the breaking API changes will be performed in 7.0.0.
 an API is tagged as `@Deprecated` or not in the latest minor release. During the development of 7.0.0,
 we may decide to remove some APIs that were not tagged as deprecated, though we'll try to avoid it." %}
 
+#### 6.24.0
+
+##### Deprecated APIs
+
+*   {% jdoc !ca!core::lang.BaseLanguageModule#addVersion(String, LanguageVersionHandler, boolean) %}
+*   Some members of {% jdoc core::lang.ast.TokenMgrError %}, in particular, a new constructor is available
+    that should be preferred to the old ones
+*   {% jdoc core::lang.antlr.AntlrTokenManager.ANTLRSyntaxError %}
+
+##### Experimental APIs
+
+**Note:** Experimental APIs are identified with the annotation {% jdoc core::annotation.Experimental %},
+see its javadoc for details
+
+* The experimental methods in {% jdoc !ca!core::lang.BaseLanguageModule %} have been replaced by a
+definitive API.
+
 #### 6.23.0
 
 ##### Deprecated APIs
@@ -856,6 +873,10 @@ large projects, with many duplications, it was causing `OutOfMemoryError`s (see 
 *   The Java rule {% rule "java/multithreading/UnsynchronizedStaticDateFormatter" %} has been deprecated and
     will be removed with PMD 7.0.0. The rule is replaced by the more general
     {% rule "java/multithreading/UnsynchronizedStaticFormatter" %}.
+
+*   The two Java rules {% rule "java/bestpractices/PositionLiteralsFirstInComparisons" %}
+    and {% rule "java/bestpractices/PositionLiteralsFirstInCaseInsensitiveComparisons" %} (ruleset `java-bestpractices`)
+    have been deprecated in favor of the new rule {% rule "java/bestpractices/LiteralsFirstInComparisons" %}.
 
 
 
