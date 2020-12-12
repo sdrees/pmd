@@ -724,7 +724,7 @@
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy</artifactId>
-                <version>2.4.7</version>
+                <version>2.4.21</version>
             </dependency>
 
             <!-- TEST DEPENDENCIES -->
@@ -1082,7 +1082,6 @@
         <module>pmd-ruby</module>
         <module>pmd-swift</module>
         <module>pmd-test</module>
-        <module>pmd-visualforce</module>
         <module>pmd-vm</module>
         <module>pmd-xml</module>
 
@@ -1096,5 +1095,6 @@
         <module>pmd-scala-modules/pmd-scala-common</module>
         <module>pmd-scala-modules/pmd-scala_2.13</module>
         <module>pmd-scala-modules/pmd-scala_2.12</module>
+        <module>pmd-visualforce</module>
     </modules>
 </project>
